@@ -12,8 +12,8 @@ function App() {
       <main>
         <OriginalBalance />
         <SixMonthView />
-        <IncomeExpense />
-        <IncomeExpense />
+        <IncomeExpense type="income"/>
+        <IncomeExpense type="expenses"/>
       </main>
     </Fragment>
   );

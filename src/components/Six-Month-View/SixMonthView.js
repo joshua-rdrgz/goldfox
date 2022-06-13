@@ -4,9 +4,10 @@ import OneMonthView from './OneMonthView'
 
 function SixMonthView() {
   return (
-    <section>
-      <h4>At the end of...</h4>
-      <div>
+    <section className='6-monthview'>
+      <h4 className='6-monthview__section-title'>At the end of...</h4>
+      <div className='6-monthview__container'>
+        {/* We might want to map this later */}
         <OneMonthView />
         <OneMonthView />
         <OneMonthView />

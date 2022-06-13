@@ -2,9 +2,9 @@ import React from "react";
 
 function NumberWrapper(props) {
   return (
-    <>
-      <span>{props.children}</span>
-    </>
+    <div className={`${props.className}-wrapper`}>
+      <span className={props.className}>{props.children}</span>
+    </div>
   )
 }
 

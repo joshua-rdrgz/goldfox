@@ -3,7 +3,7 @@ import React from 'react'
 function StartOver() {
   return (
     <>
-      <button>Start Over</button>
+      <button className='btn btn--start-over'>Start Over</button>
     </>
   )
 }

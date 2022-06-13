@@ -4,10 +4,10 @@ import NumberWrapper from "../utilities/NumberWrapper";
 
 function OneMonthView() {
   return (
-    <div>
-      <h5>This month</h5>
-      <NumberWrapper>$4,248</NumberWrapper>
-      <p>$234 higher</p>
+    <div className="6-monthview__item">
+      <h5 className="6-monthview__title">This month</h5>
+      <NumberWrapper className="6-monthview__amount">$4,248</NumberWrapper>
+      <p className="6-monthview__comparison">$234 higher</p>
     </div>
   );
 }

@@ -4,8 +4,8 @@ import StartOver from "./StartOver";
 
 function Header() {
   return (
-    <header>
-      <h1>GoldFox</h1>
+    <header className="header">
+      <h1 className="header__logo">GoldFox</h1>
       <StartOver />
     </header>
   );
