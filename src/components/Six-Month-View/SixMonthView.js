@@ -4,14 +4,17 @@ import OneMonthView from './OneMonthView'
 
 function SixMonthView() {
   return (
-    <div>
-      <OneMonthView />
-      <OneMonthView />
-      <OneMonthView />
-      <OneMonthView />
-      <OneMonthView />
-      <OneMonthView />
-    </div>
+    <section>
+      <h4>At the end of...</h4>
+      <div>
+        <OneMonthView />
+        <OneMonthView />
+        <OneMonthView />
+        <OneMonthView />
+        <OneMonthView />
+        <OneMonthView />
+      </div>
+    </section>
   )
 }
 

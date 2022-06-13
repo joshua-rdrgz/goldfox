@@ -5,10 +5,13 @@ import AddIncExp from './AddIncExp';
 
 function IncomeExpense() {
   return (
-    <div>
-      <IncExpItem />
-      <AddIncExp />
-    </div>
+    <section>
+      <h4>Income/Expense per month...</h4>
+      <div>
+        <IncExpItem />
+        <AddIncExp />
+      </div>
+    </section>
   )
 }
 
