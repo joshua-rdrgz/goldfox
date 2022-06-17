@@ -1,0 +1,24 @@
+@import '../abstracts/mixins';
+@import '../abstracts/variables';
+
+.originalBalance {
+  margin-top: 3rem;
+  text-align: center;
+  &__title {
+    @include fontHeading($font-weight-bold, 2rem);
+    color: $color-black;
+    padding-bottom: 0.5rem;
+  }
+  &__input {
+    @include designInput;
+    padding: 1rem 0;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    color: $color-primary;
+  }
+  &__prevNumber {
+    display: block;
+    font-size: 1.5rem;
+    color: $color-black;
+  }
+}
