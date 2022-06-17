@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
 
+import './styles/App.module.scss';
+
 import Header from './components/Header/Header';
 import OriginalBalance from './components/OriginalBalance';
 import SixMonthView from './components/Six-Month-View/SixMonthView';

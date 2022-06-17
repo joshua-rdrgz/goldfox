@@ -1,0 +1,26 @@
+@import './variables';
+
+// FONTS
+@mixin fontHeading($weight, $size) {
+  font-family: $font-heading;
+  font-weight: $weight;
+  font-size: $size;
+}
+
+// COLORS
+@mixin setColors($bgColor, $txtColor) {
+  background-color: $bgColor;
+  color: $txtColor;
+}
+
+// INPUTS
+@mixin designInput() {
+  @include fontHeading($font-weight-regular, 3rem);
+  border: none;
+  box-shadow: $box-shadow;
+  border-radius: 1rem;
+  &:focus {
+    outline: none;
+    border: 2px solid $color-primary
+  }
+}
