@@ -1,13 +1,15 @@
 import React from "react";
 
+import classes from '../../styles/layout/Six-Month-View/OneMonthView.module.scss';
+
 import NumberWrapper from "../utilities/NumberWrapper";
 
 function OneMonthView() {
   return (
-    <div className="6-monthview__item">
-      <h5 className="6-monthview__title">This month</h5>
-      <NumberWrapper className="6-monthview__amount">$4,248</NumberWrapper>
-      <p className="6-monthview__comparison">$234 higher</p>
+    <div className={classes.month}>
+      <h5 className={classes.month__title}>This month</h5>
+      <NumberWrapper className={classes.month__amount}>$4,248</NumberWrapper>
+      <p className={classes.month__comparison}>$234 higher</p>
     </div>
   );
 }

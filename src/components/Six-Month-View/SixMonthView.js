@@ -1,12 +1,14 @@
 import React from 'react'
 
+import classes from '../../styles/layout/Six-Month-View/SixMonthView.module.scss';
+
 import OneMonthView from './OneMonthView'
 
 function SixMonthView() {
   return (
-    <section className='6-monthview'>
-      <h4 className='6-monthview__section-title'>At the end of...</h4>
-      <div className='6-monthview__container'>
+    <section className={classes.networth}>
+      <h4 className={classes.networth__title}>At the end of...</h4>
+      <div className={classes.networth__monthContainer}>
         {/* We might want to map this later */}
         <OneMonthView />
         <OneMonthView />
