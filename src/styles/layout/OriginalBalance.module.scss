@@ -1,5 +1,6 @@
 @import '../abstracts/mixins';
 @import '../abstracts/variables';
+@import '../components/button';
 
 .originalBalance {
   margin-top: 3rem;
@@ -10,15 +11,28 @@
     padding-bottom: 0.5rem;
   }
   &__input {
-    @include designInput;
+    @include designInput(3rem, 1rem);
     padding: 1rem 0;
     margin-bottom: 0.5rem;
-    text-align: center;
     color: $color-primary;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+    &[type='number'] {
+      width: 15rem;
+    }
   }
   &__prevNumber {
     display: block;
     font-size: 1.5rem;
     color: $color-black;
+  }
+}
+
+.btn {
+  &--primary {
+    @include boxShadow(0.5);
+    padding: 1rem;
   }
 }

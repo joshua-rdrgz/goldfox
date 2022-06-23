@@ -14,24 +14,30 @@
 }
 
 // INPUTS
-@mixin designInput() {
-  @include fontHeading($font-weight-regular, 3rem);
+@mixin designInput($font-size, $border-radius) {
+  @include fontHeading($font-weight-regular, $font-size);
+  @include boxShadow(0.3);
   border: none;
-  box-shadow: $box-shadow;
-  border-radius: 1rem;
+  border-radius: $border-radius;
+  text-align: center;
   &:focus {
     outline: none;
-    border: 2px solid $color-primary
+    border: 2px solid $color-primary;
   }
 }
 
 // NUMBERS
 @mixin designNumber($font-size) {
   @include fontHeading($font-weight-regular, $font-size);
+  @include boxShadow(0.3);
   border: none;
-  box-shadow: $box-shadow;
   border-radius: 1rem;
   background-color: $color-white;
   color: $color-black;
   padding: 0.25rem 1rem;
+}
+
+// BOX SHADOW
+@mixin boxShadow($transparency) {
+  box-shadow: 0 3px 20px rgba($color-black, $transparency);
 }

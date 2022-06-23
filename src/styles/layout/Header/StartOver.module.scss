@@ -5,6 +5,5 @@
 .btn {
   &--start-over {
     margin-right: 15rem;
-    @include setColors($color-primary, $color-white);
   }
 }

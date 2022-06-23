@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 
 import './styles/App.module.scss';
+import classes from './styles/layout/IncomeExpense/IncomeExpense.module.scss';
 
 import Header from './components/Header/Header';
 import OriginalBalance from './components/OriginalBalance';
@@ -14,8 +15,10 @@ function App() {
       <main>
         <OriginalBalance />
         <SixMonthView />
-        <IncomeExpense type="income"/>
-        <IncomeExpense type="expenses"/>
+        <div className={classes.container}>
+          <IncomeExpense type="income" name="income"/>
+          <IncomeExpense type="expenses" name="expense"/>
+        </div>
       </main>
     </Fragment>
   );
