@@ -1,0 +1,26 @@
+@import "../../abstracts/mixins";
+@import "../../abstracts/variables";
+
+.networth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3rem;
+  &__caption {
+    // "At the end of..."
+    color: $color-black;
+    font-size: 1.5rem;
+    margin-right: 87rem;
+  }
+  &__monthContainer {
+    @include boxShadow(0.7);
+    display: flex;
+    gap: 6rem;
+    padding: 1rem 3rem;
+    justify-content: center;
+    text-align: center;
+    background-color: $color-secondary;
+    max-width: 100rem;
+    border-radius: 0.5rem;
+  }
+}

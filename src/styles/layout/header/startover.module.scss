@@ -1,0 +1,9 @@
+@import "../../abstracts/mixins";
+@import "../../abstracts/variables";
+@import "../../components/button";
+
+.btn {
+  &--start-over {
+    margin-right: 15rem;
+  }
+}

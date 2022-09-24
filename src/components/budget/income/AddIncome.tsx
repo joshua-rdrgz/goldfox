@@ -1,24 +1,34 @@
 import React from "react";
 
+import classes from "../../../styles/layout/budget/addincexp.module.scss";
+
 const AddIncome = () => {
   return (
-    <div>
+    <div className={classes["inc-exp__add"]}>
       <div>
         <label htmlFor="income-item" />
-        <input type="text" name="income-item" id="income-item" placeholder="Item" />
+        <input
+          className={classes["inc-exp__add-input"]}
+          type="text"
+          name="income-item"
+          id="income-item"
+          placeholder="Item"
+        />
       </div>
-      <div>
+      <div className={classes["inc-exp__add-category"]}>
         <label htmlFor="income-category" />
         <input
+          className={`${classes["inc-exp__add-input"]} ${classes["inc-exp__add-category"]}`}
           type="text"
           name="income-category"
           id="income-category"
           placeholder="Category..."
         />
       </div>
-      <div>
+      <div className={classes["inc-exp__add-amount"]}>
         <label htmlFor="income-amount" />
         <input
+          className={classes["inc-exp__add-input"]}
           type="number"
           name="income-amount"
           id="income-amount"

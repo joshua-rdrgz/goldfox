@@ -1,0 +1,17 @@
+@import "../../abstracts/mixins";
+@import "../../abstracts/variables";
+
+.month {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  &__title {
+    @include fontHeading($font-weight-bold, 2rem);
+  }
+  &__amount {
+    @include designNumber(2.75rem);
+  }
+  &__comparison {
+    font-size: 1.35rem;
+  }
+}

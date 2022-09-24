@@ -1,0 +1,25 @@
+@import "./abstracts/variables";
+
+// CSS RESET
+
+:global(*) {
+  margin: 0;
+  padding: 0;
+}
+
+:global(*, *::before, *::after) {
+  box-sizing: inherit;
+}
+
+:global(html) {
+  box-sizing: border-box;
+  font-size: 62.5%; // sets 1rem = 10px (10/16 = 62.5%)
+}
+
+:global(body) {
+  font-family: $font-body;
+  line-height: 1.6;
+  color: $color-white;
+  background-color: $color-tertiary;
+  background-size: cover;
+}

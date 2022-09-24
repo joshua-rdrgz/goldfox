@@ -1,0 +1,1 @@
+declare module "*.module.scss" // allows us to use SCSS modules

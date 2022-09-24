@@ -1,0 +1,32 @@
+@import "../../abstracts/mixins";
+@import "../../abstracts/variables";
+
+.inc-exp {
+  &__add {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+    &-input {
+      @include designInput(1.5rem, 0.6rem);
+      margin-right: 1rem;
+      &[type="number"]::-webkit-outer-spin-button,
+      &[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
+      &[type="number"] {
+        width: 6rem;
+      }
+      &-category {
+        text-align: left;
+        padding-left: 0.75rem;
+      }
+    }
+    &-category {
+      margin-right: auto;
+      text-align: left;
+    }
+    &-amount {
+      margin-left: auto;
+    }
+  }
+}

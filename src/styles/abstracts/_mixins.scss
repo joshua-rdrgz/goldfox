@@ -1,0 +1,43 @@
+@import "./variables";
+
+// FONTS
+@mixin fontHeading($weight, $size) {
+  font-family: $font-heading;
+  font-weight: $weight;
+  font-size: $size;
+}
+
+// COLORS
+@mixin setColors($bgColor, $txtColor) {
+  background-color: $bgColor;
+  color: $txtColor;
+}
+
+// INPUTS
+@mixin designInput($font-size, $border-radius) {
+  @include fontHeading($font-weight-regular, $font-size);
+  @include boxShadow(0.3);
+  border: none;
+  border-radius: $border-radius;
+  text-align: center;
+  &:focus {
+    outline: none;
+    border: 2px solid $color-primary;
+  }
+}
+
+// NUMBERS
+@mixin designNumber($font-size) {
+  @include fontHeading($font-weight-regular, $font-size);
+  @include boxShadow(0.3);
+  border: none;
+  border-radius: 1rem;
+  background-color: $color-white;
+  color: $color-black;
+  padding: 0.25rem 1rem;
+}
+
+// BOX SHADOW
+@mixin boxShadow($transparency) {
+  box-shadow: 0 3px 20px rgba($color-black, $transparency);
+}
