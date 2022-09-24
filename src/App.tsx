@@ -1,10 +1,20 @@
-import React from 'react';
+import React from "react";
+
+import Header from "./components/header/Header";
+import Balance from "./components/balance/Balance";
+import Calculations from "./components/calculations/Calculations";
+import Budget from "./components/budget/Budget";
 
 function App() {
   return (
-    <div className="App">
-      hello
-    </div>
+    <>
+      <Header />
+      <main>
+        <Balance />
+        <Calculations />
+        <Budget />
+      </main>
+    </>
   );
 }
 
