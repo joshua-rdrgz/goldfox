@@ -5,6 +5,9 @@
   font-family: $font-heading;
   font-weight: $weight;
   font-size: $size;
+  @media (max-width: $query-large) {
+    font-size: calc($size - 30%);
+  }
 }
 @mixin fontSizeSmall() {
   font-size: 1.75rem;

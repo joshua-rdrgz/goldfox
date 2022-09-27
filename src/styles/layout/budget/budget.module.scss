@@ -1,4 +1,11 @@
+@import "../../abstracts/variables";
+
 .container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  margin: 3rem 2rem 0 2rem;
+  @media (max-width: $query-large) {
+    margin: 3rem auto;
+  }
 }

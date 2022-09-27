@@ -17,20 +17,27 @@
     border-radius: 0.5rem;
     padding: 0.5rem;
     @include fontHeading($font-weight-regular, 1.5rem);
-    // FOR DOTS
-    max-width: 45rem;
+    @media (max-width: $query-small) {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
   }
   &__title {
     &::after {
       content: ",";
       padding-left: 0.25rem;
+      @media (max-width: $query-small) {
+        content: "";
+      }
     }
     @include fontHeading($font-weight-bold, 2rem);
   }
   &__category {
     margin-right: auto;
     padding-left: 0.5rem;
-    text-align: left;
+    @media (max-width: $query-small) {
+      margin-right: 0;
+    }
   }
   &__amount {
     @include designNumber(2rem);

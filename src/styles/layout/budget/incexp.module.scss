@@ -5,11 +5,21 @@
 .inc-exp {
   padding: 3rem;
   text-align: center;
+  @media (max-width: $query-large) {
+    padding: 3rem 1rem;
+  }
+  @media (max-width: $query-medium-large) {
+    padding: 1rem;
+    width: 75%;
+  }
   &__section-title {
     color: $color-black;
-    font-size: 1.5rem;
+    @include fontSizeSmall;
     margin-left: 1rem;
     text-align: left;
+    @media (max-width: $query-medium-large) {
+      text-align: center;
+    }
   }
   &__content {
     @include boxShadow(0.7);
@@ -20,8 +30,12 @@
     justify-content: center;
     text-align: center;
     background-color: $color-quaternary;
-    width: 41rem;
+    max-width: 90%;
     border-radius: 0.5rem;
+    @media (max-width: $query-large) {
+      padding: 0.5rem 1.5rem;
+      margin: 0 auto;
+    }
   }
 }
 
