@@ -13,6 +13,9 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 1rem;
+    background-color: $color-black;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
     @include fontHeading($font-weight-regular, 1.5rem);
     // FOR DOTS
     max-width: 45rem;
@@ -31,5 +34,9 @@
   }
   &__amount {
     @include designNumber(2rem);
+  }
+  &__icon {
+    font-size: 2rem;
+    margin-left: 0.5rem;
   }
 }
