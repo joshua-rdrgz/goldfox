@@ -7,11 +7,20 @@
   gap: 1rem;
   &__title {
     @include fontHeading($font-weight-bold, 2rem);
+    @media (max-width: $query-large) {
+      font-size: 1.5rem;
+    }
   }
   &__amount {
     @include designNumber(2.75rem);
+    @media (max-width: $query-large) {
+      font-size: 2rem;
+    }
   }
   &__comparison {
     font-size: 1.35rem;
+    @media (max-width: $query-large) {
+      font-size: 1rem;
+    }
   }
 }

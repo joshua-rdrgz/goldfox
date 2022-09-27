@@ -28,11 +28,8 @@
   }
   &__prevNumber {
     display: block;
-    font-size: 1.5rem;
     color: $color-black;
-    @media (max-width: $query-small) {
-      font-size: 2rem;
-    }
+    @include fontSizeSmall;
   }
 }
 
