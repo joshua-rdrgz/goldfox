@@ -2,7 +2,7 @@
 @import "../abstracts/variables";
 
 .btn {
-  @include fontHeading($font-weight-regular, 1.5rem);
+  @include fontHeading($font-weight-regular, 2.25rem);
   @include boxShadow(0.4);
   @include setColors($color-primary, $color-white);
   border-radius: 0.5rem;
