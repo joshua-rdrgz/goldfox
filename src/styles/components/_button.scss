@@ -18,4 +18,9 @@
     transform: translateY(0px);
     box-shadow: 0 4px 15px rgba($color-black, 0.2);
   }
+  @media (max-width: 400px) {
+    margin: 0.5rem auto;
+    padding: 1rem;
+    font-size: 2rem;
+  }
 }

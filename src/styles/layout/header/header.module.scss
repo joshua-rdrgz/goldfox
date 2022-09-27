@@ -5,10 +5,16 @@
   @include fontHeading($font-weight-regular, 1.5rem);
   background-color: $color-white;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-around;
   padding: 0.75rem 0;
+  @media (max-width: 400px) {
+    flex-direction: column;
+    text-align: center;
+    font-size: 2.5rem;
+  }
   &__logo {
     color: $color-black;
-    margin-left: 10rem;
   }
 }
