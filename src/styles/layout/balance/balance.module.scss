@@ -9,6 +9,9 @@
     @include fontHeading($font-weight-bold, 2rem);
     color: $color-black;
     padding-bottom: 0.5rem;
+    @media (max-width: $query-small) {
+      font-size: 3rem;
+    }
   }
   &__input {
     @include designInput(3rem, 1rem);
@@ -27,6 +30,9 @@
     display: block;
     font-size: 1.5rem;
     color: $color-black;
+    @media (max-width: $query-small) {
+      font-size: 2rem;
+    }
   }
 }
 
