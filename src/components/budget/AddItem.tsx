@@ -1,38 +1,41 @@
 import React, { useRef, useEffect } from "react";
-import { useValidity } from "../../../hooks/useValidity";
+import { useValidity } from "../../hooks/useValidity";
 
-import { useAppDispatch } from "../../../store/store-hooks";
-import { budgetActions } from "../../../store/reducers/budgetReducer";
+import { useAppDispatch } from "../../store/store-hooks";
+import { budgetActions } from "../../store/reducers/budgetReducer";
 
-import classes from "../../../styles/layout/budget/addincexp.module.scss";
+import { Props } from "../../types/components/budget/budgetTypes";
 
-const AddIncome = () => {
+import classes from "../../styles/layout/budget/addincexp.module.scss";
+
+const AddItem: React.FC<Props> = ({ type }) => {
   const dispatch = useAppDispatch();
 
-  const incomeItem = useRef<HTMLInputElement | null>(null);
-  const incomeCategory = useRef<HTMLInputElement | null>(null);
-  const incomeAmount = useRef<HTMLInputElement | null>(null);
+  const item = useRef<HTMLInputElement | null>(null);
+  const category = useRef<HTMLInputElement | null>(null);
+  const amount = useRef<HTMLInputElement | null>(null);
 
   const validityObject = {
-    item: incomeItem,
-    category: incomeCategory,
-    amount: incomeAmount,
+    item,
+    category,
+    amount,
   };
 
   const { validity, updateValidity, resetValidity } =
     useValidity(validityObject);
 
-  const showErrorFields = validity.formIsTouched && !validity.formIsValid;
+  const showErrorFields =
+    validity.formIsTouched && !validity.formIsValid;
 
   useEffect(() => {
-    const enteredItem = incomeItem.current!.value;
-    const enteredCategory = incomeCategory.current!.value;
-    const enteredAmount = incomeAmount.current!.value;
+    const enteredItem = item.current!.value;
+    const enteredCategory = category.current!.value;
+    const enteredAmount = amount.current!.value;
 
     if (validity.formIsValid) {
       dispatch(
         budgetActions.addItem({
-          type: "income",
+          type: type,
           item: enteredItem,
           category: enteredCategory,
           amount: enteredAmount,
@@ -59,17 +62,17 @@ const AddIncome = () => {
       <form
         onSubmit={addItemHandler}
         className={classes["inc-exp__add"]}
-        id="add-income"
+        id={`add-${type}`}
       >
         <div>
-          <label htmlFor="income-item" />
+          <label htmlFor={`${type}-item`} />
           <input
             className={classes["inc-exp__add-input"]}
             type="text"
-            name="income-item"
-            id="income-item"
+            name={`${type}-item`}
+            id={`${type}-item`}
             placeholder="Item"
-            ref={incomeItem}
+            ref={item}
           />
           {showErrorFields && !validity.itemIsValid && (
             <p
@@ -80,14 +83,14 @@ const AddIncome = () => {
           )}
         </div>
         <div className={classes["inc-exp__add-category"]}>
-          <label htmlFor="income-category" />
+          <label htmlFor={`${type}-category`} />
           <input
             className={`${classes["inc-exp__add-input"]} ${classes["inc-exp__add-category"]}`}
             type="text"
-            name="income-category"
-            id="income-category"
+            name={`${type}-category`}
+            id={`${type}-category`}
             placeholder="Category..."
-            ref={incomeCategory}
+            ref={category}
           />
           {showErrorFields && !validity.categoryIsValid && (
             <p
@@ -98,16 +101,16 @@ const AddIncome = () => {
           )}
         </div>
         <div className={classes["inc-exp__add-amount"]}>
-          <label htmlFor="income-amount" />
+          <label htmlFor={`${type}-amount`} />
           <input
             className={classes["inc-exp__add-input"]}
             type="number"
-            name="income-amount"
-            id="income-amount"
+            name={`${type}-amount`}
+            id={`${type}-amount`}
             placeholder="$1,234"
             min="1"
             max="99999"
-            ref={incomeAmount}
+            ref={amount}
           />
           {showErrorFields && !validity.amountIsValid && (
             <p
@@ -122,4 +125,4 @@ const AddIncome = () => {
   );
 };
 
-export default AddIncome;
+export default AddItem;

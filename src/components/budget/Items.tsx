@@ -1,28 +1,32 @@
 import React from "react";
-import { useAppSelector } from "../../../store/store-hooks";
+import { useAppSelector } from "../../store/store-hooks";
 
 import { AiFillDelete } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 
-import Number from "../../utilities/Number";
+import { Props } from "../../types/components/budget/budgetTypes";
 
-import classes from "../../../styles/layout/budget/incexpitems.module.scss";
+import Number from "../utility-components/Number";
 
-const ExpenseItems = () => {
-  const expenseItems = useAppSelector((state) => state.budget.expenseItems);
+import capitalized from "../helper-functions/capitalized";
+
+import classes from "../../styles/layout/budget/incexpitems.module.scss";
+
+const Items: React.FC<Props> = ({ type }) => {
+  const items = useAppSelector((state) => state.budget[`${type}Items`]);
 
   return (
     <div className={classes["inc-exp__container"]}>
-      {expenseItems.length === 0 && (
+      {items.length === 0 && (
         <p className={classes["inc-exp__empty-container"]}>
-          Please Enter An Expense Item!
+          Please Enter An {capitalized(type)} Item!
         </p>
       )}
-      {expenseItems.map((item, itemIndex) => {
+      {items.map((item, itemIndex) => {
         return (
           <div
             className={classes["inc-exp__item"]}
-            key={`income-item-${itemIndex + 1}`}
+            key={`${type}-item-${itemIndex + 1}`}
           >
             <h5 className={classes["inc-exp__title"]}>{item.item}</h5>
             <p className={classes["inc-exp__category"]}>{item.category}</p>
@@ -38,4 +42,4 @@ const ExpenseItems = () => {
   );
 };
 
-export default ExpenseItems;
+export default Items;
