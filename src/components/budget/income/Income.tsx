@@ -13,7 +13,13 @@ const Income = () => {
         <IncomeItems />
         <AddIncome />
       </div>
-      <button className={`${classes.btn} ${classes["btn--add"]}`}>Submit Income</button>
+      <button
+        className={`${classes.btn} ${classes["btn--add"]}`}
+        type="submit"
+        form="add-income"
+      >
+        Submit Income
+      </button>
     </section>
   );
 };
