@@ -1,6 +1,6 @@
 import React from "react";
 
-import Number from "../utilities/Number";
+import Number from "../utility-components/Number";
 
 import classes from "../../styles/layout/calculations/month.module.scss";
 
