@@ -14,11 +14,16 @@ const IncomeItems = () => {
   return (
     <div className={classes["inc-exp__container"]}>
       {incomeItems.length === 0 && (
-        <h4>Please Enter An Income Item!</h4>
+        <p className={classes["inc-exp__empty-container"]}>
+          Please Enter An Income Item!
+        </p>
       )}
       {incomeItems.map((item, itemIndex) => {
         return (
-          <div className={classes["inc-exp__item"]} key={`income-item-${itemIndex + 1}`}>
+          <div
+            className={classes["inc-exp__item"]}
+            key={`income-item-${itemIndex + 1}`}
+          >
             <h5 className={classes["inc-exp__title"]}>{item.item}</h5>
             <p className={classes["inc-exp__category"]}>{item.category}</p>
             <Number className={classes["inc-exp__amount"]}>

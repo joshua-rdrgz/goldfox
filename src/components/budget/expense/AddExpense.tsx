@@ -49,7 +49,13 @@ const AddExpense = () => {
 
   return (
     <>
-      {showErrorFields && <p>Please enter the following fields:</p>}
+      {showErrorFields && (
+        <p
+          className={`${classes["inc-exp__error"]} ${classes["inc-exp__error-form"]}`}
+        >
+          Please enter the following fields:
+        </p>
+      )}
       <form
         onSubmit={addItemHandler}
         className={classes["inc-exp__add"]}
@@ -66,7 +72,11 @@ const AddExpense = () => {
             ref={expenseItem}
           />
           {showErrorFields && !validity.itemIsValid && (
-            <p>Please enter the "Item".</p>
+            <p
+              className={`${classes["inc-exp__error"]} ${classes["inc-exp__error-item"]}`}
+            >
+              Please enter the "Item".
+            </p>
           )}
         </div>
         <div className={classes["inc-exp__add-category"]}>
@@ -80,7 +90,11 @@ const AddExpense = () => {
             ref={expenseCategory}
           />
           {showErrorFields && !validity.categoryIsValid && (
-            <p>Please enter the "Category".</p>
+            <p
+              className={`${classes["inc-exp__error"]} ${classes["inc-exp__error-item"]}`}
+            >
+              Please enter the "Category".
+            </p>
           )}
         </div>
         <div className={classes["inc-exp__add-amount"]}>
@@ -96,7 +110,11 @@ const AddExpense = () => {
             ref={expenseAmount}
           />
           {showErrorFields && !validity.amountIsValid && (
-            <p>Please enter the "Amount".</p>
+            <p
+              className={`${classes["inc-exp__error"]} ${classes["inc-exp__error-item"]}`}
+            >
+              Please enter the "Amount".
+            </p>
           )}
         </div>
       </form>
