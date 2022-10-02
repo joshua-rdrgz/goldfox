@@ -1,7 +1,7 @@
 import React from "react";
 
 interface Number {
-  children: string;
+  children: string | undefined;
   className?: string;
 }
 
