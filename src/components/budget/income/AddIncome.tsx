@@ -1,67 +1,29 @@
-import React, { useRef, useReducer, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../store/store-hooks";
-import { budgetActions } from "../../../store/reducers/budgetReducer";
+import React, { useRef, useEffect } from "react";
+import { useValidity } from "../../../hooks/useValidity";
 
-import {
-  ValidityState,
-  ValidityAction,
-} from "../../../types/components/budget/income/addIncomeTypes";
+import { useAppDispatch } from "../../../store/store-hooks";
+import { budgetActions } from "../../../store/reducers/budgetReducer";
 
 import classes from "../../../styles/layout/budget/addincexp.module.scss";
 
-const initValidityState: ValidityState = {
-  itemIsValid: false,
-  categoryIsValid: false,
-  amountIsValid: false,
-  formIsValid: false,
-  formIsTouched: false,
-};
-
-const reducer = (state: ValidityState, action: ValidityAction) => {
-  switch (action.type) {
-    case "item":
-      return { ...state, itemIsValid: action.payload };
-    case "category":
-      return { ...state, categoryIsValid: action.payload };
-    case "amount":
-      return { ...state, amountIsValid: action.payload };
-    case "form-valid":
-      return { ...state, formIsValid: action.payload };
-    case "form-touched":
-      return { ...state, formIsTouched: action.payload };
-    default:
-      throw new Error("Action Type Does Not Match");
-  }
-};
-
 const AddIncome = () => {
-  const [validity, dispatchValidity] = useReducer(reducer, initValidityState);
-
-  const incomeItems = useAppSelector((state) => state.budget.incomeItems);
-  console.log(incomeItems);
-
   const dispatch = useAppDispatch();
 
   const incomeItem = useRef<HTMLInputElement | null>(null);
   const incomeCategory = useRef<HTMLInputElement | null>(null);
   const incomeAmount = useRef<HTMLInputElement | null>(null);
 
+  const validityObject = {
+    item: incomeItem,
+    category: incomeCategory,
+    amount: incomeAmount,
+  }
+
+  const { validity, updateValidity, resetValidity } = useValidity(validityObject);
+
   const showErrorFields = validity.formIsTouched && !validity.formIsValid;
 
-  const resetValidity: () => void = () => {
-    incomeItem.current!.value = "";
-    incomeCategory.current!.value = "";
-    incomeAmount.current!.value = "";
-    dispatchValidity({ type: "item", payload: false });
-    dispatchValidity({ type: "category", payload: false });
-    dispatchValidity({ type: "amount", payload: false });
-    dispatchValidity({ type: "form-valid", payload: false });
-    dispatchValidity({ type: "form-touched", payload: false });
-  };
-
   useEffect(() => {
-    console.log(validity);
-
     const enteredItem = incomeItem.current!.value;
     const enteredCategory = incomeCategory.current!.value;
     const enteredAmount = incomeAmount.current!.value;
@@ -83,49 +45,10 @@ const AddIncome = () => {
     }
   }, [validity]);
 
-  const addItemHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const addItemHandler: (e: React.FormEvent<HTMLFormElement>) => void = (e) => {
     e.preventDefault();
-
-    const enteredItem = incomeItem.current?.value;
-    const enteredCategory = incomeCategory.current?.value;
-    const enteredAmount = incomeAmount.current?.value;
-    let formIsValid = true;
-
-    if (enteredItem !== undefined) {
-      if (enteredItem.trim() !== "") {
-        dispatchValidity({ type: "item", payload: true });
-      } else {
-        formIsValid = false;
-        dispatchValidity({ type: "item", payload: false });
-      }
-    }
-    if (enteredCategory !== undefined) {
-      if (enteredCategory.trim() !== "") {
-        dispatchValidity({ type: "category", payload: true });
-      } else {
-        formIsValid = false;
-        dispatchValidity({ type: "category", payload: false });
-      }
-    }
-    if (enteredAmount !== undefined) {
-      if (enteredAmount.trim() !== "") {
-        dispatchValidity({ type: "amount", payload: true });
-      } else {
-        formIsValid = false;
-        dispatchValidity({ type: "amount", payload: false });
-      }
-    }
-    if (formIsValid) {
-      dispatchValidity({ type: "form-valid", payload: true });
-    } else {
-      dispatchValidity({ type: "form-valid", payload: false });
-    }
-    if (!validity.formIsValid) {
-      dispatchValidity({ type: "form-touched", payload: true });
-    } else {
-      dispatchValidity({ type: "form-touched", payload: false });
-    }
-  };
+    updateValidity(validityObject);
+  }
 
   return (
     <>

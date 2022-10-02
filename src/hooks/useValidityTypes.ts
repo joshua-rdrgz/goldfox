@@ -10,3 +10,9 @@ export interface ValidityAction {
   type: "item" | "category" | "amount" | "form-valid" | "form-touched";
   payload: boolean;
 }
+
+export interface Ref {
+  item: React.MutableRefObject<HTMLInputElement | null>;
+  category: React.MutableRefObject<HTMLInputElement | null>;
+  amount: React.MutableRefObject<HTMLInputElement | null>;
+}
