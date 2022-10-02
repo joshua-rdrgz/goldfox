@@ -17,9 +17,10 @@ const AddIncome = () => {
     item: incomeItem,
     category: incomeCategory,
     amount: incomeAmount,
-  }
+  };
 
-  const { validity, updateValidity, resetValidity } = useValidity(validityObject);
+  const { validity, updateValidity, resetValidity } =
+    useValidity(validityObject);
 
   const showErrorFields = validity.formIsTouched && !validity.formIsValid;
 
@@ -28,11 +29,7 @@ const AddIncome = () => {
     const enteredCategory = incomeCategory.current!.value;
     const enteredAmount = incomeAmount.current!.value;
 
-    if (
-      validity.itemIsValid &&
-      validity.categoryIsValid &&
-      validity.amountIsValid
-    ) {
+    if (validity.formIsValid) {
       dispatch(
         budgetActions.addItem({
           type: "income",
@@ -48,7 +45,7 @@ const AddIncome = () => {
   const addItemHandler: (e: React.FormEvent<HTMLFormElement>) => void = (e) => {
     e.preventDefault();
     updateValidity(validityObject);
-  }
+  };
 
   return (
     <>
