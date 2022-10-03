@@ -11,12 +11,12 @@ export interface BudgetItem {
 }
 
 export interface EditItem {
-  type: string;
+  type: "income" | "expense";
   index: number;
   changeTo: BudgetItem;
 }
 
 export interface DeleteItem {
-  type: string;
+  type: "income" | "expense";
   index: number;
 }

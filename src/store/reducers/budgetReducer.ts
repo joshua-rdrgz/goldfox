@@ -25,17 +25,17 @@ const budgetSlice = createSlice({
     },
     editItem(state, action: PayloadAction<EditItem>) {
       const type = action.payload.type;
-      if (type.includes("inc")) {
+      if (type === "income") {
         state.incomeItems[action.payload.index] = action.payload.changeTo;
-      } else if (type.includes("exp")) {
+      } else {
         state.expenseItems[action.payload.index] = action.payload.changeTo;
       }
     },
     deleteItem(state, action: PayloadAction<DeleteItem>) {
       const type = action.payload.type;
-      if (type.includes("inc")) {
+      if (type === "income") {
         state.incomeItems.splice(action.payload.index, 1);
-      } else if (type.includes("exp")) {
+      } else {
         state.expenseItems.splice(action.payload.index, 1);
       }
     },
