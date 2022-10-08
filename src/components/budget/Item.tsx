@@ -1,7 +1,10 @@
 import { useReducer, useRef, useEffect } from "react";
 import { useAppDispatch } from "../../store/store-hooks";
 import { budgetActions } from "../../store/reducers/budgetReducer";
+import { useValidity } from "../../hooks/useValidity";
+import { ValidityProps } from "../../hooks/useValidityTypes";
 import Number from "../utility-components/Number";
+import Icon from "../utility-components/Icon";
 import {
   ItemType,
   ReducerState,
@@ -10,6 +13,7 @@ import {
 import { AiFillDelete } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 import classes from "../../styles/layout/budget/incexpitems.module.scss";
+import errorClasses from "../../styles/layout/budget/incexperror.module.scss";
 
 const reducer = (state: ReducerState, action: ReducerAction) => {
   const returnStatement = (dispatchType: string) => {
@@ -47,73 +51,140 @@ const Item = ({ item, itemIndex }: ItemType) => {
   const categoryEditRef = useRef<HTMLInputElement | null>(null);
   const amountEditRef = useRef<HTMLInputElement | null>(null);
 
-  const onClickHandler = () => {
+  const validityObject: ValidityProps = {
+    ref: {
+      item: itemEditRef,
+      category: categoryEditRef,
+      amount: amountEditRef,
+    },
+    type: "edit",
+  };
+  const { validity, updateValidity, resetValidity } =
+    useValidity(validityObject);
+
+  const onClickEditHandler = () => {
     dispatchEditState({ type: "isEditing" });
   };
 
-  const onChangeHandler = (
+  const changeHandler = (
     type: ReducerAction["type"],
     payload: ReducerAction["payload"]
   ) => {
-    dispatchEditState({ type: type, payload: payload });
+    updateValidity(validityObject);
+    dispatchEditState({ type, payload });
   };
 
-  const onSubmitHandler: (e: React.FormEvent<HTMLFormElement>) => void = (
-    e
-  ) => {
+  const submitHandler: (e: React.FormEvent<HTMLFormElement>) => void = (e) => {
     e.preventDefault();
-    dispatchEditState({ type: "isEditing" });
+    if (validity.formIsValid) {
+      dispatchEditState({ type: "isEditing" });
+      resetValidity();
+    }
   };
 
   useEffect(() => {
-    dispatch(
-      budgetActions.editItem({
-        type: item.type,
-        index: itemIndex,
-        changeTo: {
+    if (validity.formIsValid) {
+      dispatch(
+        budgetActions.editItem({
           type: item.type,
-          item: editState.edited.item,
-          category: editState.edited.category,
-          amount: editState.edited.amount,
-        },
-      })
-    );
-  }, [editState]);
+          index: itemIndex,
+          changeTo: {
+            type: item.type,
+            item: editState.edited.item,
+            category: editState.edited.category,
+            amount: editState.edited.amount,
+          },
+        })
+      );
+    }
+  }, [editState, validity]);
 
   if (editState.isEditing) {
     return (
-      <form
-        className={classes["inc-exp__item"]}
-        onSubmit={onSubmitHandler}
-        id={`edit-${item.type}-${itemIndex + 1}`}
-      >
-        <input
-          value={editState.edited.item}
-          onChange={() => {
-            onChangeHandler("item", itemEditRef.current?.value);
-          }}
-          ref={itemEditRef}
-        />
-        <input
-          value={editState.edited.category}
-          onChange={() => {
-            onChangeHandler("category", categoryEditRef.current?.value);
-          }}
-          ref={categoryEditRef}
-        />
-        <input
-          value={editState.edited.amount}
-          onChange={() => {
-            onChangeHandler("amount", amountEditRef.current?.value);
-          }}
-          ref={amountEditRef}
-        />
-        <button type="submit" form={`edit-${item.type}-${itemIndex + 1}`}>
-          <FaEdit className={classes["inc-exp__icon"]} />
-        </button>
-
-        <AiFillDelete className={classes["inc-exp__icon"]} />
-      </form>
+      <>
+        {!validity.formIsValid && (
+          <p
+            className={`${errorClasses["inc-exp__error"]} ${errorClasses["inc-exp__error-form"]}`}
+          >
+            Please enter the following fields:
+          </p>
+        )}
+        <form
+          className={classes["inc-exp__item"]}
+          onSubmit={submitHandler}
+          id={`edit-${item.type}-${itemIndex + 1}`}
+        >
+          <div>
+            <label htmlFor={`${item.type}-item-${itemIndex + 1}`} />
+            <input
+              value={editState.edited.item}
+              onChange={() => {
+                changeHandler("item", itemEditRef.current?.value);
+              }}
+              id={`${item.type}-item-${itemIndex + 1}`}
+              ref={itemEditRef}
+            />
+            {!validity.formIsValid && !validity.itemIsValid && (
+              <p
+                className={`${errorClasses["inc-exp__error"]} ${errorClasses["inc-exp__error-item"]}`}
+              >
+                Please enter an item.
+              </p>
+            )}
+          </div>
+          <div>
+            <label htmlFor={`${item.type}-category-${itemIndex + 1}`} />
+            <input
+              value={editState.edited.category}
+              onChange={() => {
+                changeHandler("category", categoryEditRef.current?.value);
+              }}
+              id={`${item.type}-category-${itemIndex + 1}`}
+              ref={categoryEditRef}
+            />
+            {!validity.formIsValid && !validity.categoryIsValid && (
+              <p
+                className={`${errorClasses["inc-exp__error"]} ${errorClasses["inc-exp__error-item"]}`}
+              >
+                Please enter a category.
+              </p>
+            )}
+          </div>
+          <div>
+            <label htmlFor={`${item.type}-amount-${itemIndex + 1}`} />
+            <input
+              value={editState.edited.amount}
+              onChange={() => {
+                changeHandler("amount", amountEditRef.current?.value);
+              }}
+              id={`${item.type}-amount-${itemIndex + 1}`}
+              ref={amountEditRef}
+            />
+            {!validity.formIsValid && !validity.amountIsValid && (
+              <p
+                className={`${errorClasses["inc-exp__error"]} ${errorClasses["inc-exp__error-item"]}`}
+              >
+                Please enter a valid amount.
+              </p>
+            )}
+          </div>
+          <Icon
+            icon={FaEdit}
+            iconClassName={classes["inc-exp__icon"]}
+            buttonClassName={classes["icon-btn"]}
+            ariaLabel="edit-item"
+            type="submit"
+            form={`edit-${item.type}-${itemIndex + 1}`}
+          />
+          <Icon
+            icon={AiFillDelete}
+            iconClassName={classes["inc-exp__icon"]}
+            buttonClassName={classes["icon-btn"]}
+            ariaLabel="delete-item"
+            type="button"
+          />
+        </form>
+      </>
     );
   } else {
     return (
@@ -123,8 +194,21 @@ const Item = ({ item, itemIndex }: ItemType) => {
         <Number className={classes["inc-exp__amount"]}>
           {`$${item.amount}`}
         </Number>
-        <FaEdit className={classes["inc-exp__icon"]} onClick={onClickHandler} />
-        <AiFillDelete className={classes["inc-exp__icon"]} />
+        <Icon
+          icon={FaEdit}
+          iconClassName={classes["inc-exp__icon"]}
+          buttonClassName={classes["icon-btn"]}
+          ariaLabel="edit-item"
+          onClick={onClickEditHandler}
+          type="button"
+        />
+        <Icon
+          icon={AiFillDelete}
+          iconClassName={classes["inc-exp__icon"]}
+          buttonClassName={classes["icon-btn"]}
+          ariaLabel="delete-item"
+          type="button"
+        />
       </div>
     );
   }

@@ -1,0 +1,7 @@
+@import "../abstracts/mixins";
+@import "../abstracts/variables";
+
+.icon-btn {
+  border: none;
+  background-color: $color-black;
+}
