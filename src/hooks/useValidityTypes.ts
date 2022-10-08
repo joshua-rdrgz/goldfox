@@ -11,8 +11,11 @@ export interface ValidityAction {
   payload: boolean;
 }
 
-export interface Ref {
-  item: React.MutableRefObject<HTMLInputElement | null>;
-  category: React.MutableRefObject<HTMLInputElement | null>;
-  amount: React.MutableRefObject<HTMLInputElement | null>;
+export interface ValidityProps {
+  ref: {
+    item: React.MutableRefObject<HTMLInputElement | null>;
+    category: React.MutableRefObject<HTMLInputElement | null>;
+    amount: React.MutableRefObject<HTMLInputElement | null>;
+  };
+  type: "add" | "edit";
 }
