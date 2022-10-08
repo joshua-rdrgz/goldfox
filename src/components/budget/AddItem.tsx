@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { useValidity } from "../../hooks/useValidity";
+import { ValidityProps } from "../../hooks/useValidityTypes";
 
 import { useAppDispatch } from "../../store/store-hooks";
 import { budgetActions } from "../../store/reducers/budgetReducer";
@@ -7,6 +8,7 @@ import { budgetActions } from "../../store/reducers/budgetReducer";
 import { Props } from "../../types/components/budget/budgetTypes";
 
 import classes from "../../styles/layout/budget/addincexp.module.scss";
+import errorClasses from "../../styles/layout/budget/incexperror.module.scss";
 
 const AddItem: React.FC<Props> = ({ type }) => {
   const dispatch = useAppDispatch();
@@ -15,10 +17,13 @@ const AddItem: React.FC<Props> = ({ type }) => {
   const category = useRef<HTMLInputElement | null>(null);
   const amount = useRef<HTMLInputElement | null>(null);
 
-  const validityObject = {
-    item,
-    category,
-    amount,
+  const validityObject: ValidityProps = {
+    ref: {
+      item,
+      category,
+      amount,
+    },
+    type: "add",
   };
 
   const { validity, updateValidity, resetValidity } =
@@ -54,7 +59,7 @@ const AddItem: React.FC<Props> = ({ type }) => {
     <>
       {showErrorFields && (
         <p
-          className={`${classes["inc-exp__error"]} ${classes["inc-exp__error-form"]}`}
+          className={`${errorClasses["inc-exp__error"]} ${errorClasses["inc-exp__error-form"]}`}
         >
           Please enter the following fields:
         </p>
@@ -76,7 +81,7 @@ const AddItem: React.FC<Props> = ({ type }) => {
           />
           {showErrorFields && !validity.itemIsValid && (
             <p
-              className={`${classes["inc-exp__error"]} ${classes["inc-exp__error-item"]}`}
+              className={`${errorClasses["inc-exp__error"]} ${errorClasses["inc-exp__error-item"]}`}
             >
               Please enter the "Item".
             </p>
@@ -94,7 +99,7 @@ const AddItem: React.FC<Props> = ({ type }) => {
           />
           {showErrorFields && !validity.categoryIsValid && (
             <p
-              className={`${classes["inc-exp__error"]} ${classes["inc-exp__error-item"]}`}
+              className={`${errorClasses["inc-exp__error"]} ${errorClasses["inc-exp__error-item"]}`}
             >
               Please enter the "Category".
             </p>
@@ -114,7 +119,7 @@ const AddItem: React.FC<Props> = ({ type }) => {
           />
           {showErrorFields && !validity.amountIsValid && (
             <p
-              className={`${classes["inc-exp__error"]} ${classes["inc-exp__error-item"]}`}
+              className={`${errorClasses["inc-exp__error"]} ${errorClasses["inc-exp__error-item"]}`}
             >
               Please enter the "Amount".
             </p>
