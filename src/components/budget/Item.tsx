@@ -1,4 +1,4 @@
-import { useReducer, useRef, useEffect } from "react";
+import { useReducer, useRef, useEffect, useState } from "react";
 import { useAppDispatch } from "../../store/store-hooks";
 import { budgetActions } from "../../store/reducers/budgetReducer";
 import { useValidity } from "../../hooks/useValidity";
@@ -10,6 +10,7 @@ import {
   ReducerState,
   ReducerAction,
 } from "../../types/components/budget/itemTypes";
+import { DeleteItem } from "../../types/store/reducers/budgetReducerTypes";
 import { AiFillDelete } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 import classes from "../../styles/layout/budget/incexpitems.module.scss";
@@ -62,8 +63,14 @@ const Item = ({ item, itemIndex }: ItemType) => {
   const { validity, updateValidity, resetValidity } =
     useValidity(validityObject);
 
+  const [itemToDelete, setItemToDelete] = useState<DeleteItem | null>(null);
+
   const onClickEditHandler = () => {
     dispatchEditState({ type: "isEditing" });
+  };
+
+  const onClickDeleteHandler = ({ type, index }: DeleteItem) => {
+    setItemToDelete({ type, index });
   };
 
   const changeHandler = (
@@ -81,6 +88,13 @@ const Item = ({ item, itemIndex }: ItemType) => {
       resetValidity();
     }
   };
+
+  useEffect(() => {
+    if (itemToDelete) {
+      dispatch(budgetActions.deleteItem(itemToDelete));
+      setItemToDelete(null);
+    }
+  }, [itemToDelete, dispatch]);
 
   useEffect(() => {
     if (validity.formIsValid) {
@@ -170,6 +184,7 @@ const Item = ({ item, itemIndex }: ItemType) => {
           </div>
           <Icon
             icon={FaEdit}
+            id={`edit-button-${itemIndex + 1}`}
             iconClassName={classes["inc-exp__icon"]}
             buttonClassName={classes["icon-btn"]}
             ariaLabel="edit-item"
@@ -178,10 +193,14 @@ const Item = ({ item, itemIndex }: ItemType) => {
           />
           <Icon
             icon={AiFillDelete}
+            id={`delete-button-${itemIndex + 1}`}
             iconClassName={classes["inc-exp__icon"]}
             buttonClassName={classes["icon-btn"]}
             ariaLabel="delete-item"
             type="button"
+            onClick={() =>
+              onClickDeleteHandler({ type: item.type, index: itemIndex })
+            }
           />
         </form>
       </>
@@ -196,6 +215,7 @@ const Item = ({ item, itemIndex }: ItemType) => {
         </Number>
         <Icon
           icon={FaEdit}
+          id={`edit-button-${itemIndex + 1}`}
           iconClassName={classes["inc-exp__icon"]}
           buttonClassName={classes["icon-btn"]}
           ariaLabel="edit-item"
@@ -204,10 +224,14 @@ const Item = ({ item, itemIndex }: ItemType) => {
         />
         <Icon
           icon={AiFillDelete}
+          id={`delete-button-${itemIndex + 1}`}
           iconClassName={classes["inc-exp__icon"]}
           buttonClassName={classes["icon-btn"]}
           ariaLabel="delete-item"
           type="button"
+          onClick={() =>
+            onClickDeleteHandler({ type: item.type, index: itemIndex })
+          }
         />
       </div>
     );

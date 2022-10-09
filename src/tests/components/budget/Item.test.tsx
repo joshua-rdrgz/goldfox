@@ -1,4 +1,4 @@
-import { render, getIcon, getElement } from "../../utilities/test-utils";
+import { render, getIcon, getElement, queryElement, getById } from "../../utilities/test-utils";
 import {
   createEditInputs,
   createItems,
@@ -26,6 +26,10 @@ function runTests(type: "income" | "expense", capitalizedType: "Income" | "Expen
   test("displays error messages and won't submit upon empty edit form values", () => {
     render(<Category type={type} />);
     checkEditFormValidity(capitalizedType);
+  });
+  test("deletes item upon trash icon click", () => {
+    render(<Category type={type} />);
+    checkDeleteIconRemovesItem(capitalizedType);
   });
 }
 
@@ -76,4 +80,24 @@ function checkEditFormValidity(capitalizedType: "Income" | "Expense") {
   expect(getElement("Please enter an item.")).toBeInTheDocument();
   expect(getElement("Please enter a category.")).toBeInTheDocument();
   expect(getElement("Please enter a valid amount.")).toBeInTheDocument();
+}
+
+function checkDeleteIconRemovesItem(capitalizedType: "Income" | "Expense") {
+  createItems(capitalizedType, { item: "item1", category: "category1", amount: "1"});
+  createItems(capitalizedType, { item: "item2", category: "category2", amount: "2"});
+  createItems(capitalizedType, { item: "item3", category: "category3", amount: "3"});
+
+  // deletes "item1" item
+  userEvent.click(getById("delete-button-1"));
+
+  expect(queryElement("item1")).not.toBeInTheDocument();
+  expect(getElement("item2")).toBeInTheDocument();
+  expect(getElement("item3")).toBeInTheDocument();
+
+  // deletes "item2" item
+  userEvent.click(getById("delete-button-1"));
+
+  expect(queryElement("item1")).not.toBeInTheDocument();
+  expect(queryElement("item2")).not.toBeInTheDocument();
+  expect(getElement("item3")).toBeInTheDocument();
 }

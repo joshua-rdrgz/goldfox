@@ -24,6 +24,14 @@ export const getElement = (text: string) => {
   return screen.getByText(text, { exact: false });
 };
 
+export const queryElement = (text: string) => {
+  return screen.queryByText(text, { exact: false });
+}
+
 export const getIcon = (ariaLabel: string) => {
   return screen.getByRole('button', { name: ariaLabel });
+}
+
+export const getById = (id: string) => {
+  return screen.getByTestId(id);
 }

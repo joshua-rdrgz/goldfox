@@ -9,11 +9,13 @@ interface IconComponent {
   icon: IconType;
   type?: "button" | "submit" | "reset" | undefined;
   form?: string;
+  id?: string;
 }
 
 const Icon: React.FC<IconComponent> = (props) => {
   return (
     <button
+      data-testid={props.id}
       className={props.buttonClassName}
       aria-label={props.ariaLabel}
       onClick={props.onClick}

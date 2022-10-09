@@ -1,4 +1,9 @@
-import { getElement, getIcon, getInputByPlaceholder, getInputByValue } from "./test-utils";
+import {
+  getElement,
+  getIcon,
+  getInputByPlaceholder,
+  getInputByValue,
+} from "./test-utils";
 import userEvent from "@testing-library/user-event";
 
 export const getAddItemInputs = () => {
@@ -20,14 +25,19 @@ export const getEditItemInputs = () => {
     itemEditInput,
     categoryEditInput,
     amountEditInput,
-  }
-}
+  };
+};
 
 interface AddItems {
   itemAddInput: HTMLElement;
   categoryAddInput: HTMLElement;
   amountAddInput: HTMLElement;
   capitalizedType: "Income" | "Expense";
+  text?: {
+    item: string;
+    category: string;
+    amount: string;
+  };
 }
 
 export const addItems = ({
@@ -35,29 +45,34 @@ export const addItems = ({
   categoryAddInput,
   amountAddInput,
   capitalizedType,
+  text,
 }: AddItems) => {
-  userEvent.type(itemAddInput, "item");
-  userEvent.type(categoryAddInput, "category");
-  userEvent.type(amountAddInput, "1234");
+  userEvent.type(itemAddInput, text?.item ? text?.item : "item");
+  userEvent.type(categoryAddInput, text?.category ? text?.category : "category");
+  userEvent.type(amountAddInput, text?.amount ? text?.amount : "1234");
   userEvent.click(getElement(`Submit ${capitalizedType}`));
 };
 
-export const createItems = (capitalizedType: "Income" | "Expense") => {
+export const createItems = (
+  capitalizedType: "Income" | "Expense",
+  text?: AddItems["text"]
+) => {
   const { itemAddInput, categoryAddInput, amountAddInput } = getAddItemInputs();
-  addItems({ itemAddInput, categoryAddInput, amountAddInput, capitalizedType });
+  addItems({ itemAddInput, categoryAddInput, amountAddInput, capitalizedType, text });
   return {
     itemAddInput,
     categoryAddInput,
-    amountAddInput
-  }
-}
+    amountAddInput,
+  };
+};
 
 export const createEditInputs = () => {
   userEvent.click(getIcon("edit-item"));
-  const { itemEditInput, categoryEditInput, amountEditInput } = getEditItemInputs();
+  const { itemEditInput, categoryEditInput, amountEditInput } =
+    getEditItemInputs();
   return {
     itemEditInput,
     categoryEditInput,
     amountEditInput,
-  }
-}
+  };
+};
