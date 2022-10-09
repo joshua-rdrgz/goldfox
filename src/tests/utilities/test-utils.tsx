@@ -12,10 +12,18 @@ export const render = (component: React.ReactNode) => {
   );
 };
 
-export const getInputField = (placeholderText: string) => {
+export const getInputByPlaceholder = (placeholderText: string) => {
   return screen.getByPlaceholderText(placeholderText);
 };
+
+export const getInputByValue = (valueText: string) => {
+  return screen.getByDisplayValue(valueText);
+}
 
 export const getElement = (text: string) => {
   return screen.getByText(text, { exact: false });
 };
+
+export const getIcon = (ariaLabel: string) => {
+  return screen.getByRole('button', { name: ariaLabel });
+}
