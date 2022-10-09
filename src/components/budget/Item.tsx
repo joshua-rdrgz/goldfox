@@ -97,7 +97,7 @@ const Item = ({ item, itemIndex }: ItemType) => {
         })
       );
     }
-  }, [editState, validity]);
+  }, [editState, validity, dispatch, item.type, itemIndex]);
 
   if (editState.isEditing) {
     return (

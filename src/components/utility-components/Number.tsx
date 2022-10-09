@@ -1,11 +1,11 @@
 import React from "react";
 
-interface Number {
+interface NumberComponent {
   children: string | undefined;
   className?: string;
 }
 
-const Number: React.FC<Number> = (props) => {
+const Number: React.FC<NumberComponent> = (props) => {
   return (
     <div className={props.className}>
       <span>{props.children}</span>

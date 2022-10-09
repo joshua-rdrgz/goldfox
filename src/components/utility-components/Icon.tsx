@@ -1,7 +1,7 @@
 import React from "react";
 import { IconType } from "react-icons/lib";
 
-interface Icon {
+interface IconComponent {
   iconClassName?: string;
   buttonClassName?: string;
   onClick?: () => void;
@@ -11,7 +11,7 @@ interface Icon {
   form?: string;
 }
 
-const Icon: React.FC<Icon> = (props) => {
+const Icon: React.FC<IconComponent> = (props) => {
   return (
     <button
       className={props.buttonClassName}

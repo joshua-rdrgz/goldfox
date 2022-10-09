@@ -48,7 +48,7 @@ const AddItem: React.FC<Props> = ({ type }) => {
       );
       resetValidity();
     }
-  }, [validity]);
+  }, [validity, dispatch, resetValidity, type]);
 
   const addItemHandler: (e: React.FormEvent<HTMLFormElement>) => void = (e) => {
     e.preventDefault();
