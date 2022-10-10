@@ -10,28 +10,29 @@
     margin-top: 2rem;
   }
   &__caption {
-    // "At the end of..."
     color: $color-black;
     @include fontSizeSmall;
     margin-bottom: 0.25rem;
+    text-align: center;
+    margin: 0 2rem;
   }
   &__monthContainer {
     @include boxShadow(0.7);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6rem;
-    padding: 1rem 3rem;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     text-align: center;
-    background-color: $color-secondary;
-    max-width: 75%;
+    background-color: $color-quaternary;
+    max-width: 85%;
     border-radius: 0.5rem;
-    @media (max-width: $query-large) {
-      gap: 4rem;
-    }
     @media (max-width: $query-medium) {
-      gap: 3rem;
-      max-width: 50%;
+      max-width: 60%;
+    }
+  }
+  &__noBalance {
+    font-size: 6rem;
+    margin: 0 3rem;
+    @media (max-width: $query-medium) {
+      font-size: 4rem;
     }
   }
 }

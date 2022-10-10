@@ -11,9 +11,6 @@
 }
 @mixin fontSizeSmall() {
   font-size: 1.75rem;
-  @media (max-width: $query-small) {
-    font-size: 2rem;
-  }
 }
 
 // COLORS
