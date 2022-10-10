@@ -50,9 +50,12 @@ const AddItem: React.FC<Props> = ({ type }) => {
     }
   }, [validity, dispatch, resetValidity, type]);
 
-  const addItemHandler: (e: React.FormEvent<HTMLFormElement>) => void = (e) => {
+  const submitHandler: (e: React.FormEvent<HTMLFormElement>) => void = (e) => {
     e.preventDefault();
     updateValidity(validityObject);
+    item!.current!.focus();
+    category!.current!.blur();
+    amount!.current!.blur();
   };
 
   return (
@@ -65,7 +68,7 @@ const AddItem: React.FC<Props> = ({ type }) => {
         </p>
       )}
       <form
-        onSubmit={addItemHandler}
+        onSubmit={submitHandler}
         className={classes["inc-exp__add"]}
         id={`add-${type}`}
       >
