@@ -10,7 +10,7 @@ export interface ReducerState {
   edited: {
     item: string | undefined;
     category: string | undefined;
-    amount: string | undefined;
+    amount: string;
   }
 };
 

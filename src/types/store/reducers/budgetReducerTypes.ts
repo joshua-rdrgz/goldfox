@@ -7,7 +7,7 @@ export interface BudgetItem {
   type: "income" | "expense";
   item: string | undefined;
   category: string | undefined;
-  amount: string | undefined;
+  amount: string;
 }
 
 export interface EditItem {

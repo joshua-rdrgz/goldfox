@@ -211,7 +211,7 @@ const Item = ({ item, itemIndex }: ItemType) => {
         <h5 className={classes["inc-exp__title"]}>{item.item}</h5>
         <p className={classes["inc-exp__category"]}>{item.category}</p>
         <Number className={classes["inc-exp__amount"]}>
-          {`$${item.amount}`}
+          {`$${(+item.amount).toLocaleString()}`}
         </Number>
         <Icon
           icon={FaEdit}
