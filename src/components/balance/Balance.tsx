@@ -39,7 +39,7 @@ const Balance = () => {
       );
       setCalcBtnPressed(false);
     }
-  }, [balance, budget, calcBtnPressed]);
+  }, [balance, budget, calcBtnPressed, dispatch]);
 
   return (
     <section className={classes.balance}>
