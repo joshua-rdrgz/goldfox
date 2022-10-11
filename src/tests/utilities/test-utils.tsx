@@ -24,6 +24,10 @@ export const getElement = (text: string) => {
   return screen.getByText(text, { exact: false });
 };
 
+export const getAllElements = (text: string) => {
+  return screen.getAllByText(text, { exact: false });
+}
+
 export const queryElement = (text: string) => {
   return screen.queryByText(text, { exact: false });
 }
