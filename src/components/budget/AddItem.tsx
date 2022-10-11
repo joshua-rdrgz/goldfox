@@ -79,6 +79,7 @@ const AddItem: React.FC<Props> = ({ type }) => {
             type="text"
             name={`${type}-item`}
             id={`${type}-item`}
+            data-testid={`${type}-item`}
             placeholder="Item"
             ref={item}
           />
@@ -97,6 +98,7 @@ const AddItem: React.FC<Props> = ({ type }) => {
             type="text"
             name={`${type}-category`}
             id={`${type}-category`}
+            data-testid={`${type}-category`}
             placeholder="Category..."
             ref={category}
           />
@@ -115,6 +117,7 @@ const AddItem: React.FC<Props> = ({ type }) => {
             type="number"
             name={`${type}-amount`}
             id={`${type}-amount`}
+            data-testid={`${type}-amount`}
             placeholder="$1,234"
             min="1"
             max="99999"

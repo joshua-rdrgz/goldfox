@@ -52,6 +52,7 @@ const Balance = () => {
           type="number"
           name="balance"
           id="balance"
+          data-testid="balance"
           placeholder="$1,234"
           min="0"
           max="99999"
