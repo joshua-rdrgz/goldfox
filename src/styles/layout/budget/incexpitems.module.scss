@@ -53,3 +53,18 @@
     color: $color-white;
   }
 }
+
+.edit-form {
+  display: block;
+  font-size: 1.3rem;
+  &__input {
+    @include designInput(1.35rem, 0.25rem);
+    margin: 0 0.5rem;
+    @media (max-width: $query-medium) {
+      @include designInput(1.5rem, 0.25rem);
+    }
+    @media (max-width: $query-small) {
+      @include designInput(1.75rem, 0.25rem);
+    }
+  }
+}

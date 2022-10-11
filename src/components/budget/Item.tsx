@@ -129,13 +129,19 @@ const Item = ({ item, itemIndex }: ItemType) => {
           id={`edit-${item.type}-${itemIndex + 1}`}
         >
           <div>
-            <label htmlFor={`${item.type}-item-${itemIndex + 1}`} />
+            <label
+              htmlFor={`${item.type}-item-${itemIndex + 1}`}
+              className={classes["edit-form"]}
+            >
+              Item
+            </label>
             <input
               value={editState.edited.item}
               onChange={() => {
                 changeHandler("item", itemEditRef.current?.value);
               }}
               id={`${item.type}-item-${itemIndex + 1}`}
+              className={classes["edit-form__input"]}
               ref={itemEditRef}
             />
             {!validity.formIsValid && !validity.itemIsValid && (
@@ -147,13 +153,19 @@ const Item = ({ item, itemIndex }: ItemType) => {
             )}
           </div>
           <div>
-            <label htmlFor={`${item.type}-category-${itemIndex + 1}`} />
+            <label
+              htmlFor={`${item.type}-category-${itemIndex + 1}`}
+              className={classes["edit-form"]}
+            >
+              Category
+            </label>
             <input
               value={editState.edited.category}
               onChange={() => {
                 changeHandler("category", categoryEditRef.current?.value);
               }}
               id={`${item.type}-category-${itemIndex + 1}`}
+              className={classes["edit-form__input"]}
               ref={categoryEditRef}
             />
             {!validity.formIsValid && !validity.categoryIsValid && (
@@ -165,13 +177,19 @@ const Item = ({ item, itemIndex }: ItemType) => {
             )}
           </div>
           <div>
-            <label htmlFor={`${item.type}-amount-${itemIndex + 1}`} />
+            <label
+              htmlFor={`${item.type}-amount-${itemIndex + 1}`}
+              className={classes["edit-form"]}
+            >
+              Amount
+            </label>
             <input
               value={editState.edited.amount}
               onChange={() => {
                 changeHandler("amount", amountEditRef.current?.value);
               }}
               id={`${item.type}-amount-${itemIndex + 1}`}
+              className={classes["edit-form__input"]}
               ref={amountEditRef}
             />
             {!validity.formIsValid && !validity.amountIsValid && (
