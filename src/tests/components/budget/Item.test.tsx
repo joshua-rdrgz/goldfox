@@ -59,7 +59,7 @@ function checkEditFormEditsItem(capitalizedType: "Income" | "Expense") {
   // expect edited versions to be present
   expect(getElement("items")).toBeInTheDocument();
   expect(getElement("categorys")).toBeInTheDocument();
-  expect(getElement("12345")).toBeInTheDocument();
+  expect(getElement("$12,345")).toBeInTheDocument();
 }
 
 function checkEditFormValidity(capitalizedType: "Income" | "Expense") {

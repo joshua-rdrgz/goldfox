@@ -39,6 +39,6 @@ function addItemChecker(capitalizedType: "Income" | "Expense") {
   // checks for existence of created item in Items component.
   expect(getElement("item")).toBeInTheDocument();
   expect(getElement("category")).toBeInTheDocument();
-  expect(getElement("$1234")).toBeInTheDocument();
+  expect(getElement("$1,234")).toBeInTheDocument();
 
 }
