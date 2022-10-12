@@ -1,4 +1,5 @@
 @import "./abstracts/variables";
+@import "./abstracts/mixins";
 
 // CSS RESET
 
@@ -22,4 +23,42 @@
   color: $color-white;
   background-color: $color-tertiary;
   background-size: cover;
+}
+
+// DESCRIPTION STYLES
+
+.description {
+  color: $color-black;
+  width: 60%;
+  margin: 0 auto;
+  &__top {
+    margin-top: 1rem;
+  }
+  &__text {
+    text-align: center;
+    font-size: 1.8rem;
+    @media (max-width: $query-medium) {
+      font-size: 1.5rem;
+    }
+  }
+  &__text:first-of-type {
+    @include fontHeading(700, 2rem);
+  }
+  &__text:last-of-type {
+    @media (max-width: $query-medium) {
+      margin: 1.5rem auto;
+    }
+  }
+  &__ul {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__li {
+    font-size: 1.75rem;
+    @media (max-width: $query-medium) {
+      font-size: 1.25rem;
+    }
+  }
 }
