@@ -33,9 +33,9 @@ function App() {
             your current net worth
           </li>
         </ul>
+        <Budget />
         <Balance />
         <Calculations />
-        <Budget />
       </main>
     </>
   );
