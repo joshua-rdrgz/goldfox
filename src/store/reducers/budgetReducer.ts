@@ -39,6 +39,10 @@ const budgetSlice = createSlice({
         state.expenseItems.splice(action.payload.index, 1);
       }
     },
+    resetBudget(state) {
+      state.expenseItems = [];
+      state.incomeItems = [];
+    },
   },
 });
 

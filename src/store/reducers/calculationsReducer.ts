@@ -74,6 +74,13 @@ const calculationsSlice = createSlice({
       state.amounts.income = action.payload.income;
       state.amounts.expense = action.payload.expense;
     },
+    resetCalculations(state) {
+      state.amounts.expense = [];
+      state.amounts.income = [];
+      state.balance = 0;
+      state.howManyMonths = 6;
+      state.results = [];
+    },
   },
 });
 
