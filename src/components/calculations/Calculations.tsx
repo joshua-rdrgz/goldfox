@@ -10,7 +10,7 @@ const Calculations = () => {
       {calculations.results.length === 0 && (
         <section className={classes.networth}>
           <div className={classes.networth__monthContainer}>
-            <h4 className={classes.networth__noBalance}>Please enter a Balance!</h4>
+            <h4 className={classes.networth__noBalance}>Please enter your information!</h4>
           </div>
         </section>
       )}

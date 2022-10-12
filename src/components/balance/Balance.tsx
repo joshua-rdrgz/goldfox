@@ -45,7 +45,7 @@ const Balance = () => {
     <section className={classes.balance}>
       <form onSubmit={submitHandler} id="calculate-form">
         <label htmlFor="balance">
-          <h2 className={classes.balance__title}>Balance:</h2>
+          <h2 className={classes.balance__title}>Net Worth:</h2>
         </label>
         <input
           className={classes.balance__input}
@@ -60,14 +60,14 @@ const Balance = () => {
         />
       </form>
       <span className={classes.balance__prevNumber}>
-        {`Current Balance Being Used: $${calculations.balance.toLocaleString()}`}
+        {`Current Net Worth Being Used: $${calculations.balance.toLocaleString()}`}
       </span>
       <button
         className={`${classes.btn} ${classes["btn--primary"]}`}
         type="submit"
         form="calculate-form"
       >
-        Calculate
+        Calculate Projections
       </button>
     </section>
   );
