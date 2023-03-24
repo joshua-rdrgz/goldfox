@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {},
+    "types": ["mocha", "chai"]
+  },
+  "include": ["src/**/*", "test/**/*"]
+}
