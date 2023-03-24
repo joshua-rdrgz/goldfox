@@ -13,9 +13,10 @@ interface IUser {
 
 interface IUserMethods {}
 
-interface UserDoc extends mongoose.HydratedDocument<IUser, IUserMethods> {
+export interface UserDoc
+  extends mongoose.HydratedDocument<IUser, IUserMethods> {
   // password: string;
-}
+} // exported for catchAsync potentially having UserDoc on req parameter
 
 type UserModel = mongoose.Model<IUser, {}, IUserMethods>;
 
