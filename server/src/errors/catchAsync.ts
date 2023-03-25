@@ -33,6 +33,6 @@ type RouteFunction<T extends ReqParams = {}> = (
 
 export default function <T extends ReqParams>(fn: RouteFunction<T>) {
   return function (req, res, next) {
-    return fn(req, res, next).catch(next);
+    fn(req, res, next).catch(next);
   } as MiddlewareFunction<T>;
 }
