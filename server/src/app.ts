@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import userRouter from '@routes/userRoutes';
 import AppError from './errors/apiError';
 import globalErrorHandler from './errors/errorController';
 
@@ -20,6 +21,8 @@ app.use('/api/v1/testing', (req, res, next) => {
     },
   });
 });
+
+app.use('/api/v1/users', userRouter);
 
 // ERROR HANDLING
 app.all('*', (req, _, next) => {
