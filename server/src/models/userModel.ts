@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 import validator from 'validator';
 import { validateUniqueProperty } from './modelUtils';
 import {
@@ -40,6 +41,7 @@ const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
     type: String,
     required: [true, 'A user must have a password.'],
     minlength: [8, `A user's password must be at least 8 characters.`],
+    select: false,
   },
   passwordConfirm: {
     type: String,
@@ -53,6 +55,20 @@ const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
   },
   photo: String,
 });
+
+// MIDDLEWARE
+userSchema.pre('save', async function(next) {
+  // DOES THE PASSWORD NEED HASHING?
+  if (this.isModified('password')) return next();
+
+  // HASH THE PASSWORD
+  this.password = await bcrypt.hash(this.password, 12);
+
+  // DELETE PASSWORD CONFIRM, NOW UNNEEDED
+  this.passwordConfirm = undefined;
+
+  next();
+} as mongoose.PreSaveMiddlewareFunction<UserDoc>);
 
 const User = mongoose.model<IUser, UserModel>('User', userSchema);
 
