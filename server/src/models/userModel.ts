@@ -59,7 +59,7 @@ const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
 // MIDDLEWARE
 userSchema.pre('save', async function(next) {
   // DOES THE PASSWORD NEED HASHING?
-  if (this.isModified('password')) return next();
+  if (!this.isModified('password')) return next();
 
   // HASH THE PASSWORD
   this.password = await bcrypt.hash(this.password, 12);
