@@ -1,24 +1,12 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import { validateUniqueProperty } from './modelUtils';
-
-interface IUser {
-  name: string;
-  email: string;
-  role: 'user' | 'admin';
-  password: string;
-  passwordConfirm: string;
-  photo?: string;
-}
-
-interface IUserMethods {}
-
-export interface UserDoc
-  extends mongoose.HydratedDocument<IUser, IUserMethods> {
-  // password: string;
-} // exported for catchAsync potentially having UserDoc on req parameter
-
-type UserModel = mongoose.Model<IUser, {}, IUserMethods>;
+import {
+  IUser,
+  IUserMethods,
+  UserDoc,
+  UserModel,
+} from '@goldfoxtypes/userTypes';
 
 const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
   name: {
