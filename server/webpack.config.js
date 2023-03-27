@@ -14,7 +14,13 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.js'],
-    alias: {},
+    alias: {
+      '@goldfoxtypes': path.resolve(__dirname, 'types'),
+      '@models': path.resolve(__dirname, 'src/models'),
+      '@routes': path.resolve(__dirname, 'src/routes'),
+      '@controllers': path.resolve(__dirname, 'src/controllers'),
+      '@catchAsync': path.resolve(__dirname, 'src/errors/catchAsync.ts'),
+    },
   },
   externals: [nodeExternals()],
   module: {
