@@ -9,7 +9,9 @@ export interface IUser {
   photo?: string;
 }
 
-export interface IUserMethods {}
+export interface IUserMethods {
+  verifyCorrectPassword(this: UserDoc, passwordString: string, passwordHash: string): Promise<boolean>;
+}
 
 export interface UserDoc
   extends mongoose.HydratedDocument<IUser, IUserMethods> {

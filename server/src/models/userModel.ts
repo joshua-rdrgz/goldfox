@@ -70,6 +70,11 @@ userSchema.pre('save', async function(next) {
   next();
 } as mongoose.PreSaveMiddlewareFunction<UserDoc>);
 
+// METHODS
+userSchema.methods.verifyCorrectPassword = async function(passwordString, passwordHash) {
+  return await bcrypt.compare(passwordString, passwordHash);
+}
+
 const User = mongoose.model<IUser, UserModel>('User', userSchema);
 
 export default User;

@@ -11,10 +11,27 @@ export interface IRequestCreateUser {
   };
 }
 
+export interface IRequestLoginUser {
+  body: {
+    email: IUser['email'];
+    password: IUser['password'];
+  };
+}
+
+export interface ISuccessfulResponseAuth {
+  status: 'success',
+  token: string;
+}
+
 export interface ISuccessfulResponseAuthUser {
   status: 'success';
   token: string;
   data: {
     user: UserDoc;
   };
+}
+
+export interface IFailedResponse {
+  status: 'fail';
+  message: string;
 }
