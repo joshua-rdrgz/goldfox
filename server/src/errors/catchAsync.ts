@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ParamsDictionary, Query } from 'express-serve-static-core';
-import { UserDoc } from 'src/models/userModel';
+import { UserDoc } from '@goldfoxtypes/userTypes';
 
 interface ReqParams<
   P extends ParamsDictionary = {},
