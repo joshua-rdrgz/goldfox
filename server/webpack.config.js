@@ -20,6 +20,7 @@ module.exports = {
       '@routes': path.resolve(__dirname, 'src/routes'),
       '@controllers': path.resolve(__dirname, 'src/controllers'),
       '@catchAsync': path.resolve(__dirname, 'src/errors/catchAsync.ts'),
+      '@appError': path.resolve(__dirname, 'src/errors/apiError.ts'),
     },
   },
   externals: [nodeExternals()],

@@ -8,7 +8,8 @@
       "@models/*": ["src/models/*"],
       "@routes/*": ["src/routes/*"],
       "@controllers/*": ["src/controllers/*"],
-      "@catchAsync": ["src/errors/catchAsync"]
+      "@catchAsync": ["src/errors/catchAsync"],
+      "@appError": ["src/errors/apiError"]
     },
     "types": ["mocha", "chai"]
   },
