@@ -6,11 +6,13 @@ export interface IUser {
   role: 'user' | 'admin';
   password: string;
   passwordConfirm: string;
+  passwordLastChangedAt?: Date;
   photo?: string;
 }
 
 export interface IUserMethods {
   verifyCorrectPassword(this: UserDoc, passwordString: string, passwordHash: string): Promise<boolean>;
+  changedPasswordAfter(this: UserDoc, jwtTimestamp: number): boolean;
 }
 
 export interface UserDoc

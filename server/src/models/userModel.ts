@@ -57,7 +57,7 @@ const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
 });
 
 // MIDDLEWARE
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
   // DOES THE PASSWORD NEED HASHING?
   if (!this.isModified('password')) return next();
 
@@ -71,9 +71,29 @@ userSchema.pre('save', async function(next) {
 } as mongoose.PreSaveMiddlewareFunction<UserDoc>);
 
 // METHODS
-userSchema.methods.verifyCorrectPassword = async function(passwordString, passwordHash) {
+userSchema.methods.verifyCorrectPassword = async function (
+  passwordString,
+  passwordHash
+) {
   return await bcrypt.compare(passwordString, passwordHash);
-}
+};
+
+userSchema.methods.changedPasswordAfter = function (jwtTimestamp) {
+  const MILLISECONDS_IN_A_SECOND = 1000;
+  // 1) CHECKED IF PASSWORD HAS EVER BEEN CHANGED
+  const hasChangedPasswordBefore = this.passwordLastChangedAt;
+
+  // 2) RETURN BOOLEAN FOR IF JWT ISSUED AFTER A CHANGE
+  if (hasChangedPasswordBefore) {
+    const lastChangedAtTimestamp =
+      this.passwordLastChangedAt.getTime() / MILLISECONDS_IN_A_SECOND;
+
+    return lastChangedAtTimestamp > jwtTimestamp;
+  }
+
+  // 1) RETURN DEFAULT
+  return false;
+};
 
 const User = mongoose.model<IUser, UserModel>('User', userSchema);
 

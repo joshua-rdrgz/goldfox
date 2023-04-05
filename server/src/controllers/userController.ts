@@ -1,19 +1,13 @@
-import jwt from 'jsonwebtoken';
 import User from '@models/userModel';
 import catchAsync from '@catchAsync';
 import AppError from '@appError';
+import { signToken, verifyJwt } from './controllerUtils';
 import {
   IRequestCreateUser,
   IRequestLoginUser,
   ISuccessfulResponseAuth,
   ISuccessfulResponseAuthUser,
 } from '@goldfoxtypes/authTypes';
-
-const signToken = (id: string) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRATION,
-  });
-};
 
 export default {
   createUser: catchAsync<IRequestCreateUser>(async (req, res, _) => {
@@ -60,5 +54,56 @@ export default {
       token,
       data: { user },
     } as ISuccessfulResponseAuth);
+  }),
+
+  protectRoute: catchAsync(async (req, _, next) => {
+    // 1) GET AUTH JWT TOKEN, CHECK IT EXISTS IN REQUEST
+    let token: string;
+
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith('Bearer')
+    ) {
+      token = req.headers.authorization.split(' ').pop();
+    }
+
+    if (!token) {
+      return next(
+        new AppError(
+          'You are not logged in.  Please log in to get access to this resource.',
+          401
+        )
+      );
+    }
+
+    // 2) VERIFY TOKEN IS VALID -- NOT EXPIRED && NOT MANIPULATED
+    const decoded = await verifyJwt(token, process.env.JWT_SECRET);
+
+    // 3) VERIFY USER ON TOKEN STILL EXISTS
+    const tokenedUser = await User.findById(decoded.id);
+
+    if (!tokenedUser) {
+      return next(
+        new AppError(
+          'This user no longer exists.  Please create an account to gain access.',
+          401
+        )
+      );
+    }
+
+    // 4) VERIFY USER'S PASSWORD HASN'T CHANGED SINCE TOKEN WAS ISSUED
+    if (tokenedUser.changedPasswordAfter(decoded.iat)) {
+      return next(
+        new AppError(
+          `This user's password has recently changed.  Please log in to gain access to this resource.`,
+          401
+        )
+      );
+    }
+
+    // ASSIGN USER ON REQ OBJECT AND GRANT ACCESS TO PROTECTED ROUTE
+    req.user = tokenedUser;
+    console.log('req from .protectRoute() : ', req);
+    next();
   }),
 };
