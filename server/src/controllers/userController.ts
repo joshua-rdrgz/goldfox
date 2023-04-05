@@ -8,6 +8,8 @@ import {
   ISuccessfulResponseAuth,
   ISuccessfulResponseAuthUser,
 } from '@goldfoxtypes/authTypes';
+import { IUser } from '@goldfoxtypes/userTypes';
+import { MiddlewareFunction } from '@goldfoxtypes/generalTypes';
 
 export default {
   createUser: catchAsync<IRequestCreateUser>(async (req, res, _) => {
@@ -106,4 +108,19 @@ export default {
     console.log('req from .protectRoute() : ', req);
     next();
   }),
+
+  restrictRouteTo: (...roles: IUser['role'][]) => {
+    const checkRolesToProhibit: MiddlewareFunction = (req, _, next) => {
+      const { role } = req.user;
+      if (!roles.includes(role)) {
+        return next(
+          new AppError(
+            'You do not have permission to perform this action.',
+            403
+          )
+        );
+      }
+    };
+    return checkRolesToProhibit;
+  },
 };
