@@ -12,4 +12,7 @@ router.route('/loginUser').post(userController.loginUser);
 // api/v1/users/forgotPassword
 router.route('/forgotPassword').post(userController.forgotPassword);
 
+// api/v1/users/resetPassword
+router.route('/resetPassword').patch(userController.resetPassword);
+
 export default router;

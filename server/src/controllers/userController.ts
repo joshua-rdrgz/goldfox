@@ -1,14 +1,14 @@
+import crypto from 'crypto';
 import User from '@models/userModel';
 import catchAsync from '@catchAsync';
 import AppError from '@appError';
-import { signToken, verifyJwt } from './controllerUtils';
+import { verifyJwt, createAndSendToken } from './controllerUtils';
 import sendEmail from '@utils/email';
 import {
   IRequestCreateUser,
   IRequestLoginUser,
   IRequestForgotPassword,
-  ISuccessfulResponseAuth,
-  ISuccessfulResponseAuthUser,
+  IRequestResetPassword,
 } from '@goldfoxtypes/authTypes';
 import { IUser } from '@goldfoxtypes/userTypes';
 import { MiddlewareFunction } from '@goldfoxtypes/generalTypes';
@@ -26,13 +26,7 @@ export default {
       photo,
     });
 
-    const token = signToken(user._id.toString());
-
-    res.status(201).json({
-      status: 'success',
-      token,
-      data: { user },
-    } as ISuccessfulResponseAuthUser);
+    createAndSendToken(user, 201, res, true);
   }),
 
   loginUser: catchAsync<IRequestLoginUser>(async (req, res, next) => {
@@ -52,12 +46,7 @@ export default {
     }
 
     // 3) SEND TOKEN TO CLIENT
-    const token = signToken(user._id.toString());
-    res.status(200).json({
-      status: 'success',
-      token,
-      data: { user },
-    } as ISuccessfulResponseAuth);
+    createAndSendToken(user, 200, res);
   }),
 
   protectRoute: catchAsync(async (req, _, next) => {
@@ -173,5 +162,32 @@ export default {
         )
       );
     }
+  }),
+
+  resetPassword: catchAsync<IRequestResetPassword>(async (req, res, next) => {
+    const { token } = req.params;
+    const { password, passwordConfirm } = req.body;
+
+    // 1) GET USER BASED ON POST-ED TOKEN
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+    const user = await User.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() },
+    });
+
+    // 2) CHECK IF USER EXISTS / TOKEN HASN'T EXPIRED
+    if (!user) {
+      return next(new AppError('Token is invalid or has expired', 400));
+    }
+
+    // 3) RESET PASSWORD
+    user.password = password;
+    user.passwordConfirm = passwordConfirm;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+
+    // 4) LOG USER IN (SEND JWT)
+    createAndSendToken(user, 200, res);
   }),
 };

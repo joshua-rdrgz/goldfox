@@ -24,15 +24,20 @@ export interface IRequestForgotPassword {
   }
 }
 
-export interface ISuccessfulResponseAuth {
-  status: 'success',
-  token: string;
+export interface IRequestResetPassword {
+  params: {
+    token: string;
+  }
+  body: {
+    password: IUser['password'];
+    passwordConfirm: IUser['passwordConfirm'];
+  }
 }
 
-export interface ISuccessfulResponseAuthUser {
+export interface ISuccessfulResponseAuth {
   status: 'success';
   token: string;
-  data: {
+  data?: {
     user: UserDoc;
   };
 }
