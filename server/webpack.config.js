@@ -19,6 +19,7 @@ module.exports = {
       '@models': path.resolve(__dirname, 'src/models'),
       '@routes': path.resolve(__dirname, 'src/routes'),
       '@controllers': path.resolve(__dirname, 'src/controllers'),
+      '@utils': path.resolve(__dirname, 'src/utils'),
       '@catchAsync': path.resolve(__dirname, 'src/errors/catchAsync.ts'),
       '@appError': path.resolve(__dirname, 'src/errors/apiError.ts'),
     },

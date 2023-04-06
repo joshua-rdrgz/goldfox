@@ -2,6 +2,7 @@ import User from '@models/userModel';
 import catchAsync from '@catchAsync';
 import AppError from '@appError';
 import { signToken, verifyJwt } from './controllerUtils';
+import sendEmail from '@utils/email';
 import {
   IRequestCreateUser,
   IRequestLoginUser,
@@ -11,7 +12,6 @@ import {
 } from '@goldfoxtypes/authTypes';
 import { IUser } from '@goldfoxtypes/userTypes';
 import { MiddlewareFunction } from '@goldfoxtypes/generalTypes';
-import sendEmail from 'src/utils/email';
 
 export default {
   createUser: catchAsync<IRequestCreateUser>(async (req, res, _) => {
