@@ -185,7 +185,7 @@ export default {
     user.passwordConfirm = passwordConfirm;
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
-    await user.save();
+    await user.save({ validateModifiedOnly: true });
 
     // 4) LOG USER IN (SEND JWT)
     createAndSendToken(user, 200, res);
