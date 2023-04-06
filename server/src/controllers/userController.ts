@@ -5,11 +5,13 @@ import { signToken, verifyJwt } from './controllerUtils';
 import {
   IRequestCreateUser,
   IRequestLoginUser,
+  IRequestForgotPassword,
   ISuccessfulResponseAuth,
   ISuccessfulResponseAuthUser,
 } from '@goldfoxtypes/authTypes';
 import { IUser } from '@goldfoxtypes/userTypes';
 import { MiddlewareFunction } from '@goldfoxtypes/generalTypes';
+import sendEmail from 'src/utils/email';
 
 export default {
   createUser: catchAsync<IRequestCreateUser>(async (req, res, _) => {
@@ -123,4 +125,53 @@ export default {
     };
     return checkRolesToProhibit;
   },
+
+  forgotPassword: catchAsync<IRequestForgotPassword>(async (req, res, next) => {
+    const { email } = req.body;
+
+    // 1) GET USER BASED ON POST-ED EMAIL
+    const user = await User.findOne({ email });
+    if (!user) {
+      return next(
+        new AppError(
+          'No user with this email address was found, please try another one.',
+          404
+        )
+      );
+    }
+
+    // 2) CREATE RESET TOKEN
+    const passwordResetToken = user.createPasswordResetToken();
+    await user.save({ validateModifiedOnly: true });
+
+    // 3) SEND TOKEN TO EMAIL
+    const resetUrl = `${req.protocol}://${req.get(
+      'host'
+    )}/api/v1/users/resetPassword/${passwordResetToken}`;
+    const message = `Forgot your password?  Submit a PATCH request with your new password and passwordConfirm to: ${resetUrl}.\nIf you didn't forget your password, please ignore this email.`;
+
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: 'Your password reset token (valid 10 minutes only!)',
+        message,
+      });
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Token sent to email!',
+      });
+    } catch (err) {
+      user.passwordResetToken = undefined;
+      user.passwordResetExpires = undefined;
+      await user.save({ validateModifiedOnly: true });
+
+      return next(
+        new AppError(
+          'There was an error sending the email. Try again later!',
+          500
+        )
+      );
+    }
+  }),
 };

@@ -7,12 +7,15 @@ export interface IUser {
   password: string;
   passwordConfirm: string;
   passwordLastChangedAt?: Date;
+  passwordResetToken?: string;
+  passwordResetExpires?: number;
   photo?: string;
 }
 
 export interface IUserMethods {
   verifyCorrectPassword(this: UserDoc, passwordString: string, passwordHash: string): Promise<boolean>;
   changedPasswordAfter(this: UserDoc, jwtTimestamp: number): boolean;
+  createPasswordResetToken(this: UserDoc): string;
 }
 
 export interface UserDoc

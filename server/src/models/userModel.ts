@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
@@ -93,6 +94,23 @@ userSchema.methods.changedPasswordAfter = function (jwtTimestamp) {
 
   // 1) RETURN DEFAULT
   return false;
+};
+
+userSchema.methods.createPasswordResetToken = function () {
+  const TEN_MINS_IN_MILLIS = 10 * 60 * 1000;
+
+  // 1) CREATE PASSWORD RESET TOKEN
+  const resetToken = crypto.randomBytes(32).toString('hex');
+
+  // 2) ATTACH TOKEN TO USER
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+  this.passwordResetExpires = Date.now() + TEN_MINS_IN_MILLIS;
+
+  // 3) RETURN TOKEN
+  return resetToken;
 };
 
 const User = mongoose.model<IUser, UserModel>('User', userSchema);

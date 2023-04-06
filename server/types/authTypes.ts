@@ -18,6 +18,12 @@ export interface IRequestLoginUser {
   };
 }
 
+export interface IRequestForgotPassword {
+  body: {
+    email: IUser['email'];
+  }
+}
+
 export interface ISuccessfulResponseAuth {
   status: 'success',
   token: string;

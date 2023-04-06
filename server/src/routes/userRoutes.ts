@@ -9,4 +9,7 @@ router.route('/createUser').post(userController.createUser);
 // api/v1/users/loginUser
 router.route('/loginUser').post(userController.loginUser);
 
+// api/v1/users/forgotPassword
+router.route('/forgotPassword').post(userController.forgotPassword);
+
 export default router;
