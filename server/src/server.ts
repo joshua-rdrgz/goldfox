@@ -8,7 +8,12 @@ process.on('uncaughtException', (err: Error) => {
   process.exit(1); // 1 stands for 'uncaught exception';
 });
 
-dotenv.config();
+if (process.env.NODE_ENV === 'development') {
+  dotenv.config({ path: '.env.development' });
+} else {
+  dotenv.config({ path: '.env' });
+}
+
 import app from './app';
 
 const DB = process.env.DB_URI.replace(
@@ -20,8 +25,6 @@ const DB = process.env.DB_URI.replace(
     ? process.env.DB_TYPE_TEST
     : process.env.DB_TYPE
 );
-
-console.log(DB);
 
 mongoose.connect(DB).then(() => console.log('DB connection successful!'));
 
