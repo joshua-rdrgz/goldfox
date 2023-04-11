@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^6.7.0",
-    "helmet": "^6.1.5"
+    "helmet": "^6.1.5",
+    "xss-clean": "^0.1.1"
   }
 }

@@ -2,6 +2,8 @@ import express from 'express';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
+import mongoSanitize from 'express-mongo-sanitize';
+import xss from 'xss-clean';
 import userRouter from '@routes/userRoutes';
 import AppError from './errors/apiError';
 import globalErrorHandler from './errors/errorController';
@@ -22,6 +24,8 @@ app.use(
   })
 );
 app.use(express.json({ limit: '10kb' }));
+app.use(mongoSanitize());
+app.use(xss());
 
 // ROUTE MOUNTING
 app.use('/api/v1/testing', (req, res, next) => {
