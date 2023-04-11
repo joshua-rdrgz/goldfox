@@ -31,3 +31,15 @@ export const createAndSendToken = (
 
   res.status(statusCode).json(json);
 };
+
+export const filterObject = (object: {}, ...allowedFields: string[]) => {
+  const filteredObject = {};
+
+  for (const property of Object.keys(object)) {
+    if (allowedFields.includes(property)) {
+      filteredObject[property] = object[property];
+    }
+  }
+
+  return filteredObject;
+};
