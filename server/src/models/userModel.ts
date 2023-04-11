@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import mongoose from 'mongoose';
+import mongoose, { Query } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
 import { validateUniqueProperty } from './modelUtils';
@@ -11,6 +11,11 @@ import {
 } from '@goldfoxtypes/userTypes';
 
 const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
   name: {
     type: String,
     required: [true, 'A user must have a name.'],
@@ -70,6 +75,12 @@ userSchema.pre('save', async function (next) {
 
   next();
 } as mongoose.PreSaveMiddlewareFunction<UserDoc>);
+
+userSchema.pre(/^find/, function (next) {
+  // QUERY ONLY FOR ACTIVE USERS
+  this.find({ active: { $ne: false } });
+  next();
+} as mongoose.PreMiddlewareFunction<mongoose.Query<UserDoc[], UserDoc>>);
 
 // METHODS
 userSchema.methods.verifyCorrectPassword = async function (
