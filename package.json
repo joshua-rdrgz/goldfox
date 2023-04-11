@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "express-rate-limit": "^6.7.0"
+    "express-rate-limit": "^6.7.0",
+    "helmet": "^6.1.5"
   }
 }

@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
 import userRouter from '@routes/userRoutes';
 import AppError from './errors/apiError';
 import globalErrorHandler from './errors/errorController';
@@ -8,6 +9,7 @@ import globalErrorHandler from './errors/errorController';
 const app = express();
 
 // MIDDLEWARES
+app.use(helmet());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
@@ -19,7 +21,7 @@ app.use(
     message: 'Too many requests from this IP, please try again in an hour.',
   })
 );
-app.use(express.json());
+app.use(express.json({ limit: '10kb' }));
 
 // ROUTE MOUNTING
 app.use('/api/v1/testing', (req, res, next) => {
