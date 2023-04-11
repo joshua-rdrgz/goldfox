@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 export interface IUser {
+  active: boolean;
   name: string;
   email: string;
   role: 'user' | 'admin';

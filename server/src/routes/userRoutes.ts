@@ -25,4 +25,9 @@ router
   .route('/updateUser')
   .patch(userController.protectRoute, userController.updateUserData);
 
+// api/v1/users/deleteUser
+router
+  .route('/deleteUser')
+  .delete(userController.protectRoute, userController.deleteUser);
+
 export default router;
