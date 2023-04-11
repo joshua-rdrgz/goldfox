@@ -34,6 +34,14 @@ export interface IRequestResetPassword {
   }
 }
 
+export interface IRequestUpdatePassword {
+  body: {
+    password: IUser['password'];
+    passwordUpdate: IUser['password'];
+    passwordConfirmUpdate: IUser['passwordConfirm'];
+  }
+}
+
 export interface ISuccessfulResponseAuth {
   status: 'success';
   token: string;

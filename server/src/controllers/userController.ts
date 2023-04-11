@@ -9,6 +9,7 @@ import {
   IRequestLoginUser,
   IRequestForgotPassword,
   IRequestResetPassword,
+  IRequestUpdatePassword,
 } from '@goldfoxtypes/authTypes';
 import { IUser } from '@goldfoxtypes/userTypes';
 import { MiddlewareFunction } from '@goldfoxtypes/generalTypes';
@@ -188,6 +189,33 @@ export default {
     await user.save({ validateModifiedOnly: true });
 
     // 4) LOG USER IN (SEND JWT)
+    createAndSendToken(user, 200, res);
+  }),
+
+  updatePassword: catchAsync<IRequestUpdatePassword>(async (req, res, next) => {
+    const { password, passwordUpdate, passwordConfirmUpdate } = req.body;
+
+    // 1) GET USER FROM DATABASE
+    const user = await User.findById(req.user._id.toString()).select(
+      '+password'
+    );
+
+    // 2) CHECK IF POST-ED PASSWORD IS CORRECT
+    if (!user || !(await user.verifyCorrectPassword(password, user.password))) {
+      return next(
+        new AppError(
+          "User doesn't exist or password is incorrect.  Please try again.",
+          400
+        )
+      );
+    }
+
+    // 3) UPDATE PASSWORD
+    user.password = passwordUpdate;
+    user.passwordConfirm = passwordConfirmUpdate;
+    await user.save();
+
+    // 4) LOG USER IN
     createAndSendToken(user, 200, res);
   }),
 };

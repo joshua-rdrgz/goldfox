@@ -15,4 +15,9 @@ router.route('/forgotPassword').post(userController.forgotPassword);
 // api/v1/users/resetPassword
 router.route('/resetPassword/:token').patch(userController.resetPassword);
 
+// api/v1/users/updatePassword
+router
+  .route('/updatePassword')
+  .patch(userController.protectRoute, userController.updatePassword);
+
 export default router;
