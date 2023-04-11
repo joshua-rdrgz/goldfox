@@ -12,7 +12,7 @@ import globalErrorHandler from './errors/errorController';
 const app = express();
 
 // MIDDLEWARES
-app.use(helmet());
+app.use(helmet()); // set security HTTP headers
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
@@ -23,13 +23,13 @@ app.use(
     windowMs: 60 * 60 * 1000,
     message: 'Too many requests from this IP, please try again in an hour.',
   })
-);
+); // limit requests from same IP
 app.use(express.json({ limit: '10kb' }));
-app.use(mongoSanitize());
-app.use(xss());
+app.use(mongoSanitize()); // data sanitization against noSQL query injection
+app.use(xss()); // data sanitization against XSS attacks
 app.use(hpp({
   whitelist: [], // put query fields that can have duplicates here!
-}));
+})); // prevent parameter pollution
 
 // ROUTE MOUNTING
 app.use('/api/v1/testing', (req, res, next) => {
