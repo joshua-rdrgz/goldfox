@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import User from '@models/userModel';
 import catchAsync from '@catchAsync';
 import AppError from '@appError';
-import { verifyJwt, createAndSendToken } from './controllerUtils';
+import { verifyJwt, createAndSendToken, filterObject } from './controllerUtils';
 import sendEmail from '@utils/email';
 import {
   IRequestCreateUser,
@@ -10,6 +10,7 @@ import {
   IRequestForgotPassword,
   IRequestResetPassword,
   IRequestUpdatePassword,
+  IRequestUpdateUser,
 } from '@goldfoxtypes/authTypes';
 import { IUser } from '@goldfoxtypes/userTypes';
 import { MiddlewareFunction } from '@goldfoxtypes/generalTypes';
@@ -217,5 +218,31 @@ export default {
 
     // 4) LOG USER IN
     createAndSendToken(user, 200, res);
+  }),
+
+  updateUserData: catchAsync<IRequestUpdateUser>(async (req, res, next) => {
+    // 1) CREATE ERROR IF USER POST-ED PASSWORD DATA
+    if (req.body.password || req.body.passwordConfirm) {
+      return next(
+        new AppError(
+          'This route is NOT for password updates.  Please use /api/v1/users/updatePassword instead',
+          400
+        )
+      );
+    }
+    // 2) FILTER UNWANTED / NOT ALLOWED FIELD NAMES
+    const filteredBody = filterObject(req.body, 'name', 'email');
+
+    // 3) UPDATE USER DOCUMENT
+    const user = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+      new: true,
+      runValidators: true,
+    });
+
+    // 4) SEND BACK UPDATED USER
+    res.status(200).json({
+      status: 'success',
+      data: { user },
+    });
   }),
 };

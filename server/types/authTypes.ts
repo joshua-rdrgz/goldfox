@@ -42,6 +42,15 @@ export interface IRequestUpdatePassword {
   }
 }
 
+export interface IRequestUpdateUser {
+  body: {
+    password?: null;
+    passwordConfirm?: null;
+    name: IUser['name'];
+    email: IUser['email'];
+  }
+}
+
 export interface ISuccessfulResponseAuth {
   status: 'success';
   token: string;

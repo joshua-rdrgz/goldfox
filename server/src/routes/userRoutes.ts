@@ -20,4 +20,9 @@ router
   .route('/updatePassword')
   .patch(userController.protectRoute, userController.updatePassword);
 
+// api/v1/users/updateUser
+router
+  .route('/updateUser')
+  .patch(userController.protectRoute, userController.updateUserData);
+
 export default router;
