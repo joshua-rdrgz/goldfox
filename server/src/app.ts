@@ -4,6 +4,7 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import xss from 'xss-clean';
+import hpp from 'hpp';
 import userRouter from '@routes/userRoutes';
 import AppError from './errors/apiError';
 import globalErrorHandler from './errors/errorController';
@@ -26,6 +27,9 @@ app.use(
 app.use(express.json({ limit: '10kb' }));
 app.use(mongoSanitize());
 app.use(xss());
+app.use(hpp({
+  whitelist: [], // put query fields that can have duplicates here!
+}));
 
 // ROUTE MOUNTING
 app.use('/api/v1/testing', (req, res, next) => {
